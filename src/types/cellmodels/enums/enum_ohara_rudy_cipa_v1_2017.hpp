@@ -1,7 +1,7 @@
 #ifndef EN_OHARA_RUDY_CIPA_V1_2017_HPP
 #define EN_OHARA_RUDY_CIPA_V1_2017_HPP
 
-enum E_ALGEBRAIC_T{
+enum EN_OHARA_RUDY_CIPA_V1_2017_ALGEBRAIC_T{
   Istim = 0,
   mss = 1,
   hss = 2,
@@ -205,7 +205,7 @@ enum E_ALGEBRAIC_T{
 };
 
 
-enum E_CONSTANTS_T{
+enum EN_OHARA_RUDY_CIPA_V1_2017_CONSTANTS_T{
   celltype = 0,
   nao = 1,
   cao = 2,
@@ -414,10 +414,11 @@ enum E_CONSTANTS_T{
   cnc = 205,
   Jtr_b = 206,
   Jleak_b = 207,
+  land_trpn = 208,
 };
 
 
-enum E_STATES_T{
+enum EN_OHARA_RUDY_CIPA_V1_2017_STATES_T{
   V = 0,
   CaMKt = 1,
   cass = 2,
@@ -467,6 +468,7 @@ enum E_STATES_T{
   xk1 = 46,
   Jrelnp = 47,
   Jrelp = 48,
+  ca_trpn = 49,
 };
 
 

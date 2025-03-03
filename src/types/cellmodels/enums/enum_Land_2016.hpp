@@ -1,10 +1,10 @@
 #ifndef EN_LAND_2016_HPP
 #define EN_LAND_2016_HPP
 
-enum CONSTANTS{
-    is_skinned = 0,
+enum EN_LAND_2016_CONSTANTS_T{
+    dlambda_dt = 0,
     lambda = 1,
-    dlambda_dt= 2,
+    elec_Cai = 2,
     perm50 = 3,
     TRPN_n = 4,
     koff = 5,
@@ -12,28 +12,29 @@ enum CONSTANTS{
     wfrac = 7,
     TOT_A = 8,
     ktm_unblock = 9,
-    beta_1_land = 10,
+    beta_1 = 10,
     beta_0 = 11,
     gamma_idx = 12,
     gamma_wu = 13,
     phi = 14,
     nperm = 15,
-    Tref = 16,
-    nu = 17,
-    mu = 18,
-    k_ws = 19,
-    k_uw = 20,
-    par_k = 21,
-    b = 22,
-    eta_l = 23,
-    eta_s = 24,
-    land_a = 25,
-    C = 26,
-    eta = 27,
-    Cai_elec = 28,
+    //ca50 = 16,
+    Tref = 17,
+    nu = 18,
+    mu = 19,
+    k_ws = 20,
+    k_uw = 21,
+    par_k = 22,
+    b = 23,
+    eta_l = 24,
+    eta_s = 25,
+    land_a = 26,
+    C = 27,
+    Cd = 28,
+    eta = 29,
 };
 
-enum ALGEBRAIC{
+enum EN_LAND_2016_ALGEBRAIC_T{
     Lfac = 0,
     cdw = 1,
     cds = 2,
@@ -49,7 +50,7 @@ enum ALGEBRAIC{
     xb_su_gamma = 12,
     gamma_rate_w = 13,
     xb_wu_gamma = 14,
-    ca50 = 15,
+    ca50 = 15,  // This appears to be both a CONSTANT and used like an ALGEBRAIC variable. Adjust based on your implementation needs.
     XSSS = 16,
     XWSS = 17,
     ktm_block = 18,
@@ -58,11 +59,9 @@ enum ALGEBRAIC{
     Tp = 21,
     Ta = 22,
     land_T = 23,
-    v_C = 24,
-    Cd = 25,
 };
 
-enum STATES{
+enum EN_LAND_2016_STATES_T{
     XS = 0,
     XW = 1,
     TRPN = 2,
@@ -70,6 +69,7 @@ enum STATES{
     ZETAS = 4,
     ZETAW = 5,
     dCd_dt = 6,
+
 };
 
 

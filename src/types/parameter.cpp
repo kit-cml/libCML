@@ -40,6 +40,7 @@ void Parameter::init()
   snprintf(user_name, sizeof(user_name), "%s", "johndoe");
   snprintf(hill_file, sizeof(hill_file), "%s", "./chantest_hill/bepridil/IC50_samples10.csv");
   snprintf(herg_file, sizeof(herg_file), "%s", "./chantest_herg/bepridil/boot_pars10.csv");
+  snprintf(cell_name, sizeof(cell_name), "%s", "ordstatic");
 // CVAR
   snprintf(cvar_file, sizeof(cvar_file), "%s", "./population/control.csv");
   snprintf(drug_name, sizeof(drug_name), "%s", "bepridil");
@@ -121,6 +122,7 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %lf\n", "tau_h_scale", tau_h_scale);
   mpi_printf( 0, "%s -- %s\n", "mutation_type", mutation_type);
   mpi_printf( 0, "%s -- %s\n", "drug_name", drug_name);
+  mpi_printf( 0, "%s -- %s\n", "cell_name", cell_name);
   mpi_printf( 0, "%s -- %hd\n", "prior_risk", prior_risk);
   mpi_printf( 0, "%s -- %s\n", "concentrations", concs);
 #ifdef TISSUE

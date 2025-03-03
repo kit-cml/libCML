@@ -96,7 +96,8 @@ delete []STATES;
 
 void lumped_systemic::initConsts()
 {
-CONSTANTS[0] = 350.;
+//CONSTANTS[0] = 350.;
+CONSTANTS[0] = 4000.;
 CONSTANTS[1] = 1.0;
 CONSTANTS[2] = 5.0;
 CONSTANTS[3] = 500;

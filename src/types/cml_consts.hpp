@@ -1,6 +1,9 @@
 #ifndef CML_CONSTS_HPP
 #define CML_CONSTS_HPP
 
+#include <string>
+#include <unordered_map>
+
 // Collection of namespaces to define global constants.
 // Please put your constants variable according 
 // to the category provided below.
@@ -30,6 +33,12 @@ namespace cml{
     static const char *RESULT_FOLDER = "./result/";
     // master node that usually used in the MPI program
     static const int MASTER_NODE = 0;
+    static const std::unordered_map<std::string, std::string> MAP_CELL_NAME = {
+        {"ordstatic", "O'Hara-Rudy (ORd) (2011)"},
+        {"ord", "O'Hara-Rudy IKr-dynamic (2017)"},
+        {"tomek", "Tomek et al. (ToR-ORd) (2019)"},
+        {"tomekdyncl","Tomek Cl-dynamic  (ToR-ORd-dynCl) (2020) "}
+    };
   }
 
   namespace tissue{

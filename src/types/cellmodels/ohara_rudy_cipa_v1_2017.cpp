@@ -1,7 +1,7 @@
 /*
    There are a total of 200 entries in the algebraic variable array.
-   There are a total of 49 entries in each of the rate and state variable arrays.
-   There are a total of 206 entries in the constant variable array.
+   There are a total of 49+1 entries in each of the rate and state variable arrays.
+   There are a total of 206+3 entries in the constant variable array.
  */
 
 #include "ohara_rudy_cipa_v1_2017.hpp"
@@ -520,8 +520,8 @@
 ohara_rudy_cipa_v1_2017::ohara_rudy_cipa_v1_2017()
 {
   algebraic_size = 200;
-  constants_size = 206+2;
-  states_size = 49;
+  constants_size = 206+3;
+  states_size = 49+1;
   ALGEBRAIC = new double[algebraic_size];
   CONSTANTS = new double[constants_size];
   RATES = new double[states_size];
@@ -799,6 +799,7 @@ CONSTANTS[b1] =  CONSTANTS[k1m]*CONSTANTS[MgADP];
 CONSTANTS[a2] = CONSTANTS[k2p];
 CONSTANTS[a4] = (( CONSTANTS[k4p]*CONSTANTS[MgATP])/CONSTANTS[Kmgatp])/(1.00000+CONSTANTS[MgATP]/CONSTANTS[Kmgatp]);
 CONSTANTS[Pnak] = (CONSTANTS[celltype]==1.00000 ?  CONSTANTS[Pnak_b]*0.900000 : CONSTANTS[celltype]==2.00000 ?  CONSTANTS[Pnak_b]*0.700000 : CONSTANTS[Pnak_b]);
+CONSTANTS[land_trpn] = 1.;
 }
 
 void ohara_rudy_cipa_v1_2017::___applyCVar(const double *cvar)
@@ -1160,6 +1161,8 @@ RATES[nai] = ( - (ALGEBRAIC[INa]+ALGEBRAIC[INaL]+ 3.00000*ALGEBRAIC[INaCa_i]+ 3.
 RATES[nass] = ( - (ALGEBRAIC[ICaNa]+ 3.00000*ALGEBRAIC[INaCa_ss])*CONSTANTS[cm]*CONSTANTS[Acap])/( CONSTANTS[F]*CONSTANTS[vss]) - ALGEBRAIC[JdiffNa];
 RATES[V] = - (ALGEBRAIC[INa]+ALGEBRAIC[INaL]+ALGEBRAIC[Ito]+ALGEBRAIC[ICaL]+ALGEBRAIC[ICaNa]+ALGEBRAIC[ICaK]+ALGEBRAIC[IKr]+ALGEBRAIC[IKs]+ALGEBRAIC[IK1]+ALGEBRAIC[INaCa_i]+ALGEBRAIC[INaCa_ss]+ALGEBRAIC[INaK]+ALGEBRAIC[INab]+ALGEBRAIC[IKb]+ALGEBRAIC[IpCa]+ALGEBRAIC[ICab]+ALGEBRAIC[Istim]);
 RATES[cass] =  ALGEBRAIC[Bcass]*((( - (ALGEBRAIC[ICaL] -  2.00000*ALGEBRAIC[INaCa_ss])*CONSTANTS[cm]*CONSTANTS[Acap])/( 2.00000*CONSTANTS[F]*CONSTANTS[vss])+( ALGEBRAIC[Jrel]*CONSTANTS[vjsr])/CONSTANTS[vss]) - ALGEBRAIC[Jdiff]);
+// new for coupling
+RATES[ca_trpn] = CONSTANTS[trpnmax] * CONSTANTS[land_trpn];
 RATES[cai] =  ALGEBRAIC[Bcai]*((( - ((ALGEBRAIC[IpCa]+ALGEBRAIC[ICab]) -  2.00000*ALGEBRAIC[INaCa_i])*CONSTANTS[cm]*CONSTANTS[Acap])/( 2.00000*CONSTANTS[F]*CONSTANTS[vmyo]) - ( ALGEBRAIC[Jup]*CONSTANTS[vnsr])/CONSTANTS[vmyo])+( ALGEBRAIC[Jdiff]*CONSTANTS[vss])/CONSTANTS[vmyo]);
 RATES[cansr] = ALGEBRAIC[Jup] - ( ALGEBRAIC[Jtr]*CONSTANTS[vjsr])/CONSTANTS[vnsr];
 RATES[cajsr] =  ALGEBRAIC[Bcajsr]*(ALGEBRAIC[Jtr] - ALGEBRAIC[Jrel]);

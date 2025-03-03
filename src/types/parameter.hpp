@@ -39,6 +39,7 @@ struct Parameter
   char drug_name[100];
   char concs[50];
   char user_name[20];
+  char cell_name[20];
   char steady_states_init_vals_file[100];
   // restitution protocol
   double cl_decrement;

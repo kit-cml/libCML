@@ -33,10 +33,14 @@ public:
   virtual void initConsts(double type, bool is_dutta){}
   virtual void initConsts(double type, double conc, const double *hill){}
   virtual void initConsts(double type, double conc, const double *hill, bool is_dutta){}
+  virtual void initConsts(double type, double conc, const double *hill, bool is_dutta, const double *cvar) {}
   virtual void initConsts(double type, double conc, const double *hill, const double* herg){}
   virtual void initConsts(double type, double conc, const double *hill, const double* herg, const double* cvar){}
+  virtual void initConsts( bool is_skinned, bool BETA, double* y){}
   virtual void computeRates(double TIME, double *CONSTANTS, double *RATES, double *STATES, double *ALGEBRAIC) = 0;
+  virtual void computeRates(double TIME, double *CONSTANTS, double *RATES, double *STATES, double *ALGEBRAIC, double *y){};
   virtual void solveAnalytical(double dt) {};
+  virtual void solveEuler( double dt, double t, double Cai_input ){};
   virtual double set_time_step(double TIME,double time_point, 
     double min_time_step, double max_time_step, 
     double min_dV, double max_dV) {return 0.005;};

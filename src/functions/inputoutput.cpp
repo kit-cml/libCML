@@ -209,6 +209,9 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "drug_name") == 0) {
       strncpy( p_param->drug_name, value, sizeof(p_param->concs) );
     }
+    else if (strcasecmp(key, "cell_name") == 0) {
+      strncpy( p_param->cell_name, value, sizeof(p_param->cell_name) );
+    }
     else if (strcasecmp(key, "concentrations") == 0) {
       strncpy( p_param->concs, value, sizeof(p_param->concs) );
     }

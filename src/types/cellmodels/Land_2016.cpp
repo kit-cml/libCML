@@ -260,7 +260,6 @@ void Land_2016::solveEuler(double dt, double t, double Cai_input)
 {
 
     CONSTANTS[elec_Cai] = Cai_input;
-    printf("%lf,%lf\n", t, Cai_input);
     STATES[XS] = STATES[XS] + RATES[XS] * dt;
     STATES[XW] = STATES[XW] + RATES[XW] * dt;
     STATES[TRPN] = STATES[TRPN] + RATES[TRPN] * dt;

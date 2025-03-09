@@ -522,7 +522,7 @@ void Tomek_model::___initConsts(double type)
   CONSTANTS[rad] = 0.0011;
   STATES[V] = (CONSTANTS[celltype] == 1.00000 ? -89.14 : CONSTANTS[celltype] == 2.00000 ? -89.1704
                                                                                         : -88.7638);
-  CONSTANTS[stim_start] = 0;
+  CONSTANTS[stim_start] = 10;
 #ifdef TISSUE
   CONSTANTS[stim_start] = 2;
 #endif

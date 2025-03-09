@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 // Collection of namespaces to define global constants.
 // Please put your constants variable according 
@@ -39,6 +40,7 @@ namespace cml{
         {"tomek", "Tomek et al. (ToR-ORd) (2019)"},
         {"tomekdyncl","Tomek Cl-dynamic  (ToR-ORd-dynCl) (2020) "}
     };
+    static const std::vector<std::string> VECTOR_CELL_TYPE = {"endocardium", "epicardium", "mid-myocardium"};
   }
 
   namespace tissue{

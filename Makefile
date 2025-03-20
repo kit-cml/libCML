@@ -31,7 +31,7 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 # Flags for C++
-CXXFLAGS := -fPIC -fpermissive -std=c++11 -I/opt/prog/sundials/sundials-5.7.0/include
+CXXFLAGS := -fPIC -fpermissive -std=c++11 -I/opt/prog/sundials/sundials-5.7.0/include -I/usr/include
 #CXXFLAGS += -DTISSUE
 #CXXFLAGS := -fPIC -fpermissive
 
@@ -39,7 +39,7 @@ CXXFLAGS := -fPIC -fpermissive -std=c++11 -I/opt/prog/sundials/sundials-5.7.0/in
 CFLAGS := -fPIC
 
 # Flags for binary
-LDFLAGS := -L/usr/local/lib ./lib/libsundials_cvode.a ./lib/libsundials_nvecserial.a
+LDFLAGS := -L/usr/lib64 -lcurl -ljson-c ./lib/libsundials_cvode.a ./lib/libsundials_nvecserial.a
 
 # Static libs build
 LIB_BUILD_STATIC := gcc-ar -rcs

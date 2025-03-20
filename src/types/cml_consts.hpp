@@ -18,15 +18,14 @@
 namespace cml{
   
   namespace math{
-    // to normalize the small values
-    // so it can compressed the file size.
-    // Information of the scaling should be
-    // described in the header result.
+    // Usually used for unit conversion/
     static const int METER_TO_MICROMETER = 1000000;
     static const int MILLI_TO_NANO = 1000000;
     static const int MICRO_TO_NANO = 1000;
-    static const double SECOND_TO_MINUTE = 0.01666666667;
-    static const double MILLISECOND_TO_SECOND = 0.001;
+    static const int DAYS_TO_SECONDS = 86400;
+    static const double SECONDS_TO_DAYS = 0.0000115741;
+    static const double SECONDS_TO_MINUTES = 0.01666666667;
+    static const double MILLISECONDS_TO_SECONDS = 0.001;
   }
   
   namespace commons{
@@ -41,6 +40,17 @@ namespace cml{
         {"tomekdyncl","Tomek Cl-dynamic  (ToR-ORd-dynCl) (2020) "}
     };
     static const std::vector<std::string> VECTOR_CELL_TYPE = {"endocardium", "epicardium", "mid-myocardium"};
+  }
+
+  namespace network{
+    static const char *TIME_API_URL = "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Seoul";
+  }
+
+  namespace security{
+    static const char *MACHINE_UUID_FILE = "/etc/machine-id";
+    static const char *MACHINE_UUID_BACKUP_FILE = "/var/lib/dbus/machine-id";
+    static const char *SYSTEM_UUID_FILE = "/sys/class/dmi/id/product_uuid";
+    static const int TRIAL_PERIOD_DAYS = 30;
   }
 
   namespace tissue{

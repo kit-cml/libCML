@@ -36,7 +36,7 @@ int get_response_from_api(ApiResponse *p_response)
   curl_global_init(CURL_GLOBAL_ALL);
   curl = curl_easy_init();
   if(curl == NULL){
-    mpi_fprintf(cml::commons::MASTER_NODE, stderr, "Problem occured on cURL initialization!!\n");
+    fprintf(stderr, "Problem occured on cURL initialization!!\n");
     return -1;
   }
 
@@ -47,7 +47,7 @@ int get_response_from_api(ApiResponse *p_response)
 
   res = curl_easy_perform(curl);
   if (res != CURLE_OK) {
-    mpi_fprintf(cml::commons::MASTER_NODE, stderr, "Failed to fetch time: %s\n", curl_easy_strerror(res));
+    fprintf(stderr, "Failed to fetch time: %s\n", curl_easy_strerror(res));
     free(p_response->memory);
     curl_easy_cleanup(curl);
     return -1;
@@ -65,12 +65,12 @@ time_t get_unix_time_from_json(ApiResponse *p_response)
   printf("JSON: %s\n", p_response->memory);
   parsed_json = json_tokener_parse(p_response->memory);
   if (!parsed_json) {
-    mpi_fprintf(cml::commons::MASTER_NODE, stderr, "Error parsing JSON\n");
+    fprintf(stderr, "Error parsing JSON\n");
     return -1;
   }
 
   if (!json_object_object_get_ex(parsed_json, "dateTime", &date_time_obj)) {
-    mpi_fprintf(cml::commons::MASTER_NODE, stderr, "JSON key 'dateTime' not found\n");
+    fprintf(stderr, "JSON key 'dateTime' not found\n");
     json_object_put(parsed_json);
     return -1;
   }
@@ -88,7 +88,7 @@ time_t datetime_to_unixtime(const char *datetime_str )
     
   // Parse the date string without fractional seconds
   if (strptime(datetime_str, "%Y-%m-%dT%H:%M:%S", &tm) == NULL) {
-    mpi_fprintf(cml::commons::MASTER_NODE, stderr, "Error parsing the date string.\n");
+    fprintf(stderr, "Error parsing the date string.\n");
     return -1;
   }
 
@@ -101,7 +101,7 @@ time_t datetime_to_unixtime(const char *datetime_str )
   time_t unix_time = mktime(&tm);
     
   // Uncomment for debugging.
-  //mpi_printf(cml::commons::MASTER_NODE, "Unix Timestamp: %ld\n", unix_time);
+  //printf("Unix Timestamp: %ld\n", unix_time);
 
   return unix_time;
 }
@@ -145,7 +145,7 @@ std::string get_system_uuid() {
 
 std::string get_hardware_id()
 {
-	return get_machine_uuid() + "==" + get_system_uuid();
+  return get_machine_uuid() + "==" + get_system_uuid();
 }
 
 int validate_license()
@@ -191,7 +191,7 @@ int validate_license()
   license_hardware_id.compare(hardware_id),
   abs(license_unix_time-unix_time) * cml::math::SECONDS_TO_DAYS);
   if( license_hardware_id.compare(hardware_id) != 0 || abs(license_unix_time-unix_time) > (cml::security::TRIAL_PERIOD_DAYS * cml::math::DAYS_TO_SECONDS)  ){
-    mpi_fprintf(cml::commons::MASTER_NODE, stderr, "Please renew the license by contacting MetaHeart!\n");
+    fprintf(stderr, "Please renew the license by contacting MetaHeart!\n");
     return -1;
   }
 

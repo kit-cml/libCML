@@ -48,6 +48,21 @@ void init_cvode(CVodeSolverData* p_cvode, Cellmodel* p_cell, double tcurr)
   CVodeSetErrHandlerFn(p_cvode->cvode_mem, errorHandler, p_cell);
 }
 
+void init_cvode_circ(CVodeSolverData* p_cvode, Cellmodel* p_cell, double tcurr, double dt_set)
+{
+  p_cvode->cvode_mem = CVodeCreate(CV_BDF);
+  p_cvode->states_vec = N_VMake_Serial(p_cell->states_size, p_cell->STATES);
+  p_cvode->matrix = SUNDenseMatrix(p_cell->states_size, p_cell->states_size);
+  p_cvode->solver = SUNLinSol_Dense(p_cvode->states_vec, p_cvode->matrix);
+  CVodeInit(p_cvode->cvode_mem, rhs_fn, tcurr, p_cvode->states_vec);
+  CVodeSetUserData(p_cvode->cvode_mem, p_cell);
+  CVodeSStolerances(p_cvode->cvode_mem, 1.0e-7, 1.0e-7);
+  CVodeSetLinearSolver(p_cvode->cvode_mem, p_cvode->solver, p_cvode->matrix);
+  CVodeSetErrHandlerFn(p_cvode->cvode_mem, errorHandler, p_cell);
+  CVodeSetMaxStep(p_cvode->cvode_mem, dt_set);
+}
+
+
 void set_dt_cvode(CVodeSolverData* p_cvode, double tcurr, double time_point, double bcl,
 double dt_min, double dt_max, double *dt )
 {

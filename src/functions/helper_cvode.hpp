@@ -27,6 +27,9 @@ void errorHandler(int pErrorCode, const char *pModule, const char *pFunction,
 // Initialize CVode setting for p_cvode.
 void init_cvode(CVodeSolverData* p_cvode, Cellmodel* p_cell, double tcurr);
 
+// Initialize CVode setting for p_cvode (only for circulation simulation)
+void init_cvode_circ(CVodeSolverData* p_cvode, Cellmodel* p_cell, double tcurr, double dt_set);
+
 // Change the maximum time step according to
 // the specified conditions.
 void set_dt_cvode(CVodeSolverData* p_cvode, double tcurr, double time_point, double bcl,

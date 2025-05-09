@@ -121,8 +121,8 @@ int check_drug_data_content(const Drug_Block_Input &vec, const Parameter *p_para
     mpi_printf(0, "Something problem with the drug file!\n");
     return 1;
   }
-  else if(vec.size() > 2000){
-    mpi_printf(0, "Too much input! Maximum sample data is 2000!\n");
+  else if(vec.size() > 10000){
+    mpi_printf(0, "Too much input! Maximum sample data is 10000!\n");
     return 1;
   }
   else if(p_param->pace_max < 750 && p_param->pace_max > 1000){

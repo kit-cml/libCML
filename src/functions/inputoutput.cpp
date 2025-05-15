@@ -1,4 +1,5 @@
 #include "inputoutput.hpp"
+#include "../types/cml_consts.hpp"
 #include "../types/mpi_profile.hpp"
 
 #include <cstdarg>
@@ -326,21 +327,20 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
 int create_concs_directories( std::vector<double> &concs, const char *drug_name )
 {
   // constants to avoid magic values
-  static const char *RESULT_FOLDER_PATH = "result";
   static const double CONTROL_CONC = 0.;
   char buffer[900];
   char create_time_str[9];
   int idx;
 
-  make_directory(RESULT_FOLDER_PATH);
-  snprintf( buffer, sizeof(buffer), "%s/%s", RESULT_FOLDER_PATH, drug_name);
-  if(is_file_existed(RESULT_FOLDER_PATH) == 0) make_directory(buffer);
-  snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", RESULT_FOLDER_PATH, drug_name, CONTROL_CONC);
-  if(is_file_existed(RESULT_FOLDER_PATH) == 0) make_directory(buffer);
+  make_directory(cml::commons::RESULT_FOLDER);
+  snprintf( buffer, sizeof(buffer), "%s/%s", cml::commons::RESULT_FOLDER, drug_name);
+  if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
+  snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", cml::commons::RESULT_FOLDER, drug_name, CONTROL_CONC);
+  if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
   for( idx = 0; idx < concs.size(); idx++ )
   { // begin concentration loop
-    snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", RESULT_FOLDER_PATH, drug_name, concs[idx] );
-    if(is_file_existed(RESULT_FOLDER_PATH) == 0) make_directory(buffer);
+    snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", cml::commons::RESULT_FOLDER, drug_name, concs[idx] );
+    if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
   } // end concentration loop
 
   return 0;

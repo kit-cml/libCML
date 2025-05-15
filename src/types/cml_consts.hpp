@@ -30,7 +30,7 @@ namespace cml{
   
   namespace commons{
     // the default constants of result folder
-    static const char *RESULT_FOLDER = "./result/";
+    static const char *RESULT_FOLDER = "./results/";
     // master node that usually used in the MPI program
     static const int MASTER_NODE = 0;
     static const std::unordered_map<std::string, std::string> MAP_CELL_NAME = {

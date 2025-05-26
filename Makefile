@@ -33,6 +33,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 # Flags for C++
 CXXFLAGS := -fPIC -fpermissive -std=c++11 -I./libs/sundials-5.7.0/include -I/usr/include
 #CXXFLAGS += -DTISSUE
+#CXXFLAGS += -DLICENSE_DEBUG
 #CXXFLAGS := -fPIC -fpermissive
 
 # Flags for C

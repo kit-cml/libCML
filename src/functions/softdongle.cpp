@@ -199,7 +199,9 @@ int validate_license()
   fclose(fp_license);
 
   // uncomment only for debugging.
-  printf("%ld\n%s\n%ld\n", size, license_hardware_id.c_str(), license_unix_time);
+#ifdef LICENSE_DEBUG
+  printf("Data from license file: %ld\n%s\n%ld\n", size, license_hardware_id.c_str(), license_unix_time);
+#endif
   long int days_elapsed = (long int)(labs(license_unix_time-unix_time) * cml::math::SECONDS_TO_DAYS);
 #ifdef LICENSE_DEBUG
   printf("Correct hardware: %d\nPeriod passed from the beginning: %ld days\n",

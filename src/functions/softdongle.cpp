@@ -85,8 +85,7 @@ time_t get_unix_time_from_json(ApiResponse *p_response)
 
 time_t datetime_to_unixtime(const char *datetime_str )
 {
-  struct tm tm;
-  double fractional_seconds;
+  struct tm tm = {0}; // Zero-initialize the struct tm
     
   // Parse the date string without fractional seconds
   if (strptime(datetime_str, "%Y-%m-%dT%H:%M:%S", &tm) == NULL) {
@@ -94,16 +93,27 @@ time_t datetime_to_unixtime(const char *datetime_str )
     return -1;
   }
 
+  // Set tm_isdst to -1 to let mktime determine DST
+  tm.tm_isdst = -1;
+
   // Uncomment these 3 lines for debugging.
-  //printf("Today is %d - %d %d, %d ---- %d:%d:%d\n", 
-  //      tm.tm_wday, tm.tm_mon+1,tm.tm_mday,1900 + tm.tm_year,
-  //      tm.tm_hour, tm.tm_min, tm.tm_sec);
+#ifdef LICENSE_DEBUG
+  printf("Today is %d - %d %d, %d ---- %d:%d:%d\n", 
+        tm.tm_wday, tm.tm_mon+1,tm.tm_mday,1900 + tm.tm_year,
+        tm.tm_hour, tm.tm_min, tm.tm_sec);
+#endif
 
   // Convert the tm structure to time_t (Unix timestamp)
   time_t unix_time = mktime(&tm);
+  if (unix_time == -1) {
+    fprintf(stderr, "mktime failed to convert time\n");
+    return -1;
+  }
     
   // Uncomment for debugging.
-  //printf("Unix Timestamp: %ld\n", unix_time);
+#ifdef LICENSE_DEBUG
+  printf("Unix Timestamp: %ld\n", unix_time);
+#endif
 
   return unix_time;
 }
@@ -163,7 +173,6 @@ int validate_license()
   std::string hardware_id = get_hardware_id();
 #ifdef LICENSE_DEBUG
   printf("API message: %s\n", p_response.memory);
-  printf("UnixTime: %ld\n", unix_time);
   printf("Hardware ID: %s\n", hardware_id.c_str());
 #endif
 

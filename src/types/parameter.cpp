@@ -44,7 +44,7 @@ void Parameter::init()
 // CVAR
   snprintf(cvar_file, sizeof(cvar_file), "%s", "./population/control.csv");
   snprintf(drug_name, sizeof(drug_name), "%s", "bepridil");
-  snprintf(steady_states_init_vals_file, sizeof(steady_states_init_vals_file), "last_states_%hd_paces_ord.dat", pace_max);
+  snprintf(repol_states_folder, sizeof(repol_states_folder), "./results/bepridil");
   snprintf(concs, sizeof(concs), "%s", "99.0");
 
 #ifdef TISSUE
@@ -90,7 +90,7 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %s\n", "herg_file", herg_file );
   mpi_printf( 0, "%s -- %s\n", "is_cvar", is_cvar ? "true" : "false" );
   mpi_printf( 0, "%s -- %s\n", "cvar_file", cvar_file );
-  mpi_printf( 0, "%s -- %s\n", "steady-state_init_values_file", steady_states_init_vals_file );
+  mpi_printf( 0, "%s -- %s\n", "repol_states_folder", repol_states_folder);
   mpi_printf( 0, "%s -- %hd\n", "celltype", celltype);
   mpi_printf( 0, "%s -- %hd\n", "solver_type", solver_type);
   mpi_printf( 0, "%s -- %s\n", "is_postprocessing", is_postprocessing ? "true" : "false" );

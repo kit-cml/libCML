@@ -267,8 +267,8 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "mutation_type") == 0){
       strncpy( p_param->mutation_type, value, sizeof(p_param->mutation_type));
     }
-    else if (strcasecmp(key, "steady_states_init_vals_file") == 0 && strlen(value) > 0){
-      strncpy( p_param->steady_states_init_vals_file, value, sizeof(p_param->steady_states_init_vals_file));
+    else if (strcasecmp(key, "repol_states_folder") == 0 && strlen(value) > 0){
+      strncpy( p_param->repol_states_folder, value, sizeof(p_param->repol_states_folder));
     }
     else if (strcasecmp(key, "is_postprocessing") == 0){
       p_param->is_postprocessing = strtol( value, NULL, 10 );

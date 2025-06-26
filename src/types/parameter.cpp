@@ -8,7 +8,6 @@ void Parameter::init()
 {
   bcl = 2000.;
   pace_max = 1000;
-  celltype = 0;
   solver_type = 0;
   dt = 0.005;
   dt_min = 0.005;
@@ -36,11 +35,11 @@ void Parameter::init()
   cl_decrement = 10;
   cl_end = 100;
   rest_pace_max = 20;
+  snprintf(cell_model, sizeof(cell_model), "%s", "CiPAORdv1.0_endo");
   snprintf(mutation_type, sizeof(mutation_type), "%s", "CTL");
   snprintf(user_name, sizeof(user_name), "%s", "johndoe");
   snprintf(hill_file, sizeof(hill_file), "%s", "./chantest_hill/bepridil/IC50_samples10.csv");
   snprintf(herg_file, sizeof(herg_file), "%s", "./chantest_herg/bepridil/boot_pars10.csv");
-  snprintf(cell_name, sizeof(cell_name), "%s", "ordstatic");
 // CVAR
   snprintf(cvar_file, sizeof(cvar_file), "%s", "./population/control.csv");
   snprintf(drug_name, sizeof(drug_name), "%s", "bepridil");
@@ -91,7 +90,6 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %s\n", "is_cvar", is_cvar ? "true" : "false" );
   mpi_printf( 0, "%s -- %s\n", "cvar_file", cvar_file );
   mpi_printf( 0, "%s -- %s\n", "repol_states_folder", repol_states_folder);
-  mpi_printf( 0, "%s -- %hd\n", "celltype", celltype);
   mpi_printf( 0, "%s -- %hd\n", "solver_type", solver_type);
   mpi_printf( 0, "%s -- %s\n", "is_postprocessing", is_postprocessing ? "true" : "false" );
   mpi_printf( 0, "%s -- %lf\n", "basic_cycle_length", bcl);
@@ -122,7 +120,7 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %lf\n", "tau_h_scale", tau_h_scale);
   mpi_printf( 0, "%s -- %s\n", "mutation_type", mutation_type);
   mpi_printf( 0, "%s -- %s\n", "drug_name", drug_name);
-  mpi_printf( 0, "%s -- %s\n", "cell_name", cell_name);
+  mpi_printf( 0, "%s -- %s\n", "cell_model", cell_model);
   mpi_printf( 0, "%s -- %hd\n", "prior_risk", prior_risk);
   mpi_printf( 0, "%s -- %s\n", "concentrations", concs);
 #ifdef TISSUE

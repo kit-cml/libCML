@@ -6,7 +6,7 @@ struct Parameter
   double bcl; // basic cycle length
   short pace_max; // maximum pace
   short solver_type; // 0: Euler, 1: CVode, 2: Analytical, 3: BDF
-  short celltype;  // 0: endo, 1: epi, 2: M
+  char cell_model[50]; // cell model type and the type of the cell (if exist)
   short prior_risk; // 0: low, 1: intermediate, 2: high
   double dt;        // time step
   double dt_min;    // minimum time step (for adaptive dt)
@@ -39,7 +39,6 @@ struct Parameter
   char drug_name[100];
   char concs[50];
   char user_name[20];
-  char cell_name[20];
   char repol_states_folder[100];
   // restitution protocol
   double cl_decrement;

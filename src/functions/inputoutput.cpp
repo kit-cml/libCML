@@ -168,8 +168,8 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
   // and store each line to the buffer
   while ( is_default == false && fgets( buffer, 100, fp_inputdeck ) != NULL ) {
     sscanf( buffer, "%s %*s %s", key, value );
-    if (strcasecmp(key, "celltype") == 0) {
-      p_param->celltype = strtol( value, NULL, 10 );
+    if (strcasecmp(key, "cell_model") == 0) {
+      strncpy( p_param->cell_model, value, sizeof(p_param->cell_model) );
     }
     else if (strcasecmp(key, "solver_type") == 0) {
       p_param->solver_type = strtol( value, NULL, 10 );
@@ -213,8 +213,8 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "drug_name") == 0) {
       strncpy( p_param->drug_name, value, sizeof(p_param->concs) );
     }
-    else if (strcasecmp(key, "cell_name") == 0) {
-      strncpy( p_param->cell_name, value, sizeof(p_param->cell_name) );
+    else if (strcasecmp(key, "cell_model") == 0) {
+      strncpy( p_param->cell_model, value, sizeof(p_param->cell_model) );
     }
     else if (strcasecmp(key, "concentrations") == 0) {
       strncpy( p_param->concs, value, sizeof(p_param->concs) );

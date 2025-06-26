@@ -34,12 +34,19 @@ namespace cml{
     // master node that usually used in the MPI program
     static const int MASTER_NODE = 0;
     static const std::unordered_map<std::string, std::string> MAP_CELL_NAME = {
-        {"ordstatic", "O'Hara-Rudy (ORd) (2011)"},
-        {"ord", "O'Hara-Rudy IKr-dynamic (2017)"},
-        {"tomek", "Tomek et al. (ToR-ORd) (2019)"},
-        {"tomekdyncl","Tomek Cl-dynamic  (ToR-ORd-dynCl) (2020) "}
+        {"ORdstatic-Dutta_endo", "O'Hara-Rudy with Dutta Modification (2011) endocardium"},
+        {"ORdstatic-Dutta_epi", "O'Hara-Rudy with Dutta Modification (2011) epicardium"},
+        {"ORdstatic-Dutta_myo", "O'Hara-Rudy with Dutta Modification (2011) mid-myocardium"},
+        {"CiPAORdv1.0_endo", "O'Hara-Rudy IKr-dynamic (2017) endocardium"},
+        {"CiPAORdv1.0_epi", "O'Hara-Rudy IKr-dynamic (2017) epicardium"},
+        {"CiPAORdv1.0_myo", "O'Hara-Rudy IKr-dynamic (2017) mid-myocardium"},
+        {"ToR-ORd_endo", "Tomek et al. (2019) endocardium"},
+        {"ToR-ORd_epi", "Tomek et al. (2019) epicardium"},
+        {"ToR-ORd_myo", "Tomek et al. (2019) mid-myocardium"},
+        {"ToR-ORd-dynCl_endo","Tomek model with dynamic chloride (2020) endocardium"},
+        {"ToR-ORd-dynCl_epi","Tomek model with dynamic chloride (2020) epicardium"},
+        {"ToR-ORd-dynCl_myo","Tomek model with dynamic chloride (2020) mid-myocardium"}
     };
-    static const std::vector<std::string> VECTOR_CELL_TYPE = {"endocardium", "epicardium", "mid-myocardium"};
   }
 
   namespace network{

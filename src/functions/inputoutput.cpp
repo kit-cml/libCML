@@ -172,7 +172,7 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
       strncpy( p_param->cell_model, value, sizeof(p_param->cell_model) );
     }
     else if (strcasecmp(key, "solver_type") == 0) {
-      p_param->solver_type = strtol( value, NULL, 10 );
+      strncpy( p_param->solver_type, value, sizeof(p_param->solver_type) );
     }
     else if (strcasecmp(key, "user_name") == 0) {
       strncpy( p_param->user_name, value, sizeof(p_param->user_name));

@@ -8,7 +8,6 @@ void Parameter::init()
 {
   bcl = 2000.;
   pace_max = 1000;
-  solver_type = 0;
   dt = 0.005;
   dt_min = 0.005;
   dt_max = 1.;
@@ -36,6 +35,7 @@ void Parameter::init()
   cl_end = 100;
   rest_pace_max = 20;
   snprintf(cell_model, sizeof(cell_model), "%s", "CiPAORdv1.0_endo");
+  snprintf(solver_type, sizeof(solver_type), "%s", "CVode");
   snprintf(mutation_type, sizeof(mutation_type), "%s", "CTL");
   snprintf(user_name, sizeof(user_name), "%s", "johndoe");
   snprintf(hill_file, sizeof(hill_file), "%s", "./chantest_hill/bepridil/IC50_samples10.csv");
@@ -90,7 +90,7 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %s\n", "is_cvar", is_cvar ? "true" : "false" );
   mpi_printf( 0, "%s -- %s\n", "cvar_file", cvar_file );
   mpi_printf( 0, "%s -- %s\n", "repol_states_folder", repol_states_folder);
-  mpi_printf( 0, "%s -- %hd\n", "solver_type", solver_type);
+  mpi_printf( 0, "%s -- %s\n", "solver_type", solver_type);
   mpi_printf( 0, "%s -- %s\n", "is_postprocessing", is_postprocessing ? "true" : "false" );
   mpi_printf( 0, "%s -- %lf\n", "basic_cycle_length", bcl);
   mpi_printf( 0, "%s -- %hd\n", "number_of_pacing", pace_max);

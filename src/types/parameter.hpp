@@ -5,7 +5,7 @@ struct Parameter
 {
   double bcl; // basic cycle length
   short pace_max; // maximum pace
-  short solver_type; // 0: Euler, 1: CVode, 2: Analytical, 3: BDF
+  char solver_type[50]; // for now, only Euler or CVode are available
   char cell_model[50]; // cell model type and the type of the cell (if exist)
   short prior_risk; // 0: low, 1: intermediate, 2: high
   double dt;        // time step

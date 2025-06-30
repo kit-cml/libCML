@@ -34,9 +34,9 @@ namespace cml{
     // master node that usually used in the MPI program
     static const int MASTER_NODE = 0;
     static const std::unordered_map<std::string, std::string> MAP_CELL_NAME = {
-        {"ORdstatic-Dutta_endo", "O'Hara-Rudy with Dutta Modification (2011) endocardium"},
-        {"ORdstatic-Dutta_epi", "O'Hara-Rudy with Dutta Modification (2011) epicardium"},
-        {"ORdstatic-Dutta_myo", "O'Hara-Rudy with Dutta Modification (2011) mid-myocardium"},
+        {"ORd-static_endo", "O'Hara-Rudy static (2011) endocardium"},
+        {"ORd-static_epi", "O'Hara-Rudy static (2011) epicardium"},
+        {"ORd-static_myo", "O'Hara-Rudy static (2011) mid-myocardium"},
         {"CiPAORdv1.0_endo", "O'Hara-Rudy IKr-dynamic (2017) endocardium"},
         {"CiPAORdv1.0_epi", "O'Hara-Rudy IKr-dynamic (2017) epicardium"},
         {"CiPAORdv1.0_myo", "O'Hara-Rudy IKr-dynamic (2017) mid-myocardium"},

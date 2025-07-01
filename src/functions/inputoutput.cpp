@@ -129,7 +129,7 @@ int check_drug_data_content(const Drug_Block_Input &vec, const Parameter *p_para
     mpi_printf(0, "Too much input! Maximum sample data is 10000!\n");
     return 1;
   }
-  else if(p_param->pace_max < 750 && p_param->pace_max > 1000){
+  else if(p_param->number_pacing < 750 && p_param->number_pacing > 1000){
     mpi_printf(0, "Make sure the maximum pace is around 750 to 1000!\n");
     return 1;
   }
@@ -177,8 +177,8 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "user_name") == 0) {
       strncpy( p_param->user_name, value, sizeof(p_param->user_name));
     }
-    else if (strcasecmp(key, "basic_cycle_length") == 0) {
-      p_param->bcl = strtod( value, NULL );
+    else if (strcasecmp(key, "cycle_length") == 0) {
+      p_param->cycle_length = strtod( value, NULL );
     }
     else if (strcasecmp(key, "cl_decrement") == 0) {
       p_param->cl_decrement = strtod( value, NULL );
@@ -189,35 +189,29 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "rest_max_pacing") == 0) {
       p_param->rest_pace_max = strtod( value, NULL );
     }
-    else if (strcasecmp(key, "number_of_pacing") == 0) {
-      p_param->pace_max = strtol( value, NULL, 10 );
+    else if (strcasecmp(key, "number_pacing") == 0) {
+      p_param->number_pacing = strtol( value, NULL, 10 );
     }
-    else if (strcasecmp(key, "time_step") == 0) {
-      p_param->dt = strtod( value, NULL );
+    else if (strcasecmp(key, "number_pacing_write") == 0) {
+      p_param->number_pacing_write = strtol( value, NULL, 10 );
     }
     else if (strcasecmp(key, "time_step_min") == 0) {
-      p_param->dt_min = strtod( value, NULL );
+      p_param->time_step_min = strtod( value, NULL );
     }
     else if (strcasecmp(key, "time_step_max") == 0) {
-      p_param->dt_max = strtod( value, NULL );
-    }
-    else if (strcasecmp(key, "dvm/dt_min") == 0) {
-      p_param->dvm_min = strtod( value, NULL );
-    }
-    else if (strcasecmp(key, "dvm/dt_max") == 0) {
-      p_param->dvm_max = strtod( value, NULL );
+      p_param->time_step_max = strtod( value, NULL );
     }
     else if (strcasecmp(key, "writing_step") == 0) {
-      p_param->dtw = strtod( value, NULL );
+      p_param->writing_step = strtod( value, NULL );
     }
     else if (strcasecmp(key, "drug_name") == 0) {
-      strncpy( p_param->drug_name, value, sizeof(p_param->concs) );
+      strncpy( p_param->drug_name, value, sizeof(p_param->drug_name) );
     }
     else if (strcasecmp(key, "cell_model") == 0) {
       strncpy( p_param->cell_model, value, sizeof(p_param->cell_model) );
     }
-    else if (strcasecmp(key, "concentrations") == 0) {
-      strncpy( p_param->concs, value, sizeof(p_param->concs) );
+    else if (strcasecmp(key, "drug_concentrations") == 0) {
+      strncpy( p_param->drug_concentrations, value, sizeof(p_param->drug_concentrations) );
     }
     else if (strcasecmp(key, "prior_risk") == 0) {
       p_param->prior_risk = strtol( value, NULL, 10 );;
@@ -267,8 +261,8 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "mutation_type") == 0){
       strncpy( p_param->mutation_type, value, sizeof(p_param->mutation_type));
     }
-    else if (strcasecmp(key, "repol_states_folder") == 0 && strlen(value) > 0){
-      strncpy( p_param->repol_states_folder, value, sizeof(p_param->repol_states_folder));
+    else if (strcasecmp(key, "initial_values_directory") == 0 && strlen(value) > 0){
+      strncpy( p_param->initial_values_directory, value, sizeof(p_param->initial_values_directory));
     }
     else if (strcasecmp(key, "is_postprocessing") == 0){
       p_param->is_postprocessing = strtol( value, NULL, 10 );
@@ -277,10 +271,10 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
       p_param->is_cvar = strtol( value, NULL, 10 );
     }
     else if (strcasecmp(key, "stimulus_duration") == 0) {
-      p_param->stim_dur = strtod( value, NULL);
+      p_param->stimulus_duration = strtod( value, NULL);
     }
     else if (strcasecmp(key, "stimulus_amplitude_scale") == 0) {
-      p_param->stim_amp_scale = strtod( value, NULL);
+      p_param->stimulus_amplitude_scale = strtod( value, NULL);
     }
 #ifdef TISSUE
     else if (strcasecmp(key, "diffusion_scale") == 0) {
@@ -327,7 +321,7 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
   return 0;
 }
 
-int create_concs_directories( std::vector<double> &concs, const char *drug_name )
+int create_drug_concentrations_directories( std::vector<double> &drug_concentrations, const char *drug_name )
 {
   // constants to avoid magic values
   static const double CONTROL_CONC = 0.;
@@ -340,9 +334,9 @@ int create_concs_directories( std::vector<double> &concs, const char *drug_name 
   if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
   snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", cml::commons::RESULT_FOLDER, drug_name, CONTROL_CONC);
   if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
-  for( idx = 0; idx < concs.size(); idx++ )
+  for( idx = 0; idx < drug_concentrations.size(); idx++ )
   { // begin concentration loop
-    snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", cml::commons::RESULT_FOLDER, drug_name, concs[idx] );
+    snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", cml::commons::RESULT_FOLDER, drug_name, drug_concentrations[idx] );
     if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
   } // end concentration loop
 

@@ -6,16 +6,14 @@
 
 void Parameter::init()
 {
-  bcl = 2000.;
-  pace_max = 1000;
-  dt = 0.005;
-  dt_min = 0.005;
-  dt_max = 1.;
-  dvm_min = 0.2;
-  dvm_max = 0.8;
-  dtw = 2.0;
-  stim_dur = 0.5;
-  stim_amp_scale = 1.0;
+  cycle_length = 2000.;
+  number_pacing = 1000;
+  number_pacing_write = 0;
+  time_step_min = 0.005;
+  time_step_max = 1.;
+  writing_step = 2.0;
+  stimulus_duration = 0.5;
+  stimulus_amplitude_scale = 1.0;
   prior_risk = 2;
   gks_scale = 1.;
   gkr_scale = 1.;
@@ -43,8 +41,8 @@ void Parameter::init()
 // CVAR
   snprintf(cvar_file, sizeof(cvar_file), "%s", "./population/control.csv");
   snprintf(drug_name, sizeof(drug_name), "%s", "bepridil");
-  snprintf(repol_states_folder, sizeof(repol_states_folder), "./results/bepridil");
-  snprintf(concs, sizeof(concs), "%s", "99.0");
+  snprintf(initial_values_directory, sizeof(initial_values_directory), "../simulation_cpu/results/bepridil");
+  snprintf(drug_concentrations, sizeof(drug_concentrations), "%s", "99.0");
 
 #ifdef TISSUE
   is_crt = false;
@@ -89,24 +87,22 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %s\n", "herg_file", herg_file );
   mpi_printf( 0, "%s -- %s\n", "is_cvar", is_cvar ? "true" : "false" );
   mpi_printf( 0, "%s -- %s\n", "cvar_file", cvar_file );
-  mpi_printf( 0, "%s -- %s\n", "repol_states_folder", repol_states_folder);
+  mpi_printf( 0, "%s -- %s\n", "initial_values_directory", initial_values_directory);
   mpi_printf( 0, "%s -- %s\n", "solver_type", solver_type);
   mpi_printf( 0, "%s -- %s\n", "is_postprocessing", is_postprocessing ? "true" : "false" );
-  mpi_printf( 0, "%s -- %lf\n", "basic_cycle_length", bcl);
-  mpi_printf( 0, "%s -- %hd\n", "number_of_pacing", pace_max);
+  mpi_printf( 0, "%s -- %lf\n", "cycle_length", cycle_length);
+  mpi_printf( 0, "%s -- %hd\n", "number_pacing", number_pacing);
+  mpi_printf( 0, "%s -- %hd\n", "number_pacing_write", number_pacing_write);
   mpi_printf( 0, "-------- Restitution Protocol (if applied) -------------\n");
   mpi_printf( 0, "%s -- %hd\n", "cl_decrement", cl_decrement);
   mpi_printf( 0, "%s -- %hd\n", "cl_end", cl_end);
   mpi_printf( 0, "%s -- %hd\n", "rest_pace_max", rest_pace_max);
   mpi_printf( 0, "--------------------------------------------------------\n");
-  mpi_printf( 0, "%s -- %lf\n", "time_step", dt);
-  mpi_printf( 0, "%s -- %lf\n", "time_step_min", dt_min);
-  mpi_printf( 0, "%s -- %lf\n", "time_step_max", dt_max);
-  mpi_printf( 0, "%s -- %lf\n", "dvm/dt_min", dvm_min);
-  mpi_printf( 0, "%s -- %lf\n", "dvm/dt_max", dvm_max);
-  mpi_printf( 0, "%s -- %lf\n", "writing_step", dtw);
-  mpi_printf( 0, "%s -- %lf\n", "stimulus_duration", stim_dur);
-  mpi_printf( 0, "%s -- %lf\n", "stimulus_amplitude_scale", stim_amp_scale);
+  mpi_printf( 0, "%s -- %lf\n", "time_step_min", time_step_min);
+  mpi_printf( 0, "%s -- %lf\n", "time_step_max", time_step_max);
+  mpi_printf( 0, "%s -- %lf\n", "writing_step", writing_step);
+  mpi_printf( 0, "%s -- %lf\n", "stimulus_duration", stimulus_duration);
+  mpi_printf( 0, "%s -- %lf\n", "stimulus_amplitude_scale", stimulus_amplitude_scale);
   mpi_printf( 0, "%s -- %lf\n", "gks_scale", gks_scale);
   mpi_printf( 0, "%s -- %lf\n", "gkr_scale", gkr_scale);
   mpi_printf( 0, "%s -- %lf\n", "gk1_scale", gk1_scale);
@@ -122,7 +118,7 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %s\n", "drug_name", drug_name);
   mpi_printf( 0, "%s -- %s\n", "cell_model", cell_model);
   mpi_printf( 0, "%s -- %hd\n", "prior_risk", prior_risk);
-  mpi_printf( 0, "%s -- %s\n", "concentrations", concs);
+  mpi_printf( 0, "%s -- %s\n", "drug_concentrations", drug_concentrations);
 #ifdef TISSUE
   mpi_printf( 0, "%s -- %s\n", "is_crt", is_crt ? "true" : "false" );
   mpi_printf( 0, "%s -- %s\n", "is_ecg", is_ecg ? "true" : "false" );

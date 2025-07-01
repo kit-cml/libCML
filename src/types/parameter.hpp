@@ -3,19 +3,17 @@
 
 struct Parameter
 {
-  double bcl; // basic cycle length
-  short pace_max; // maximum pace
+  double cycle_length; // period for one cycle
+  short number_pacing; // pace number of the simulation
+  short number_pacing_write; // pace number for writing result
   char solver_type[50]; // for now, only Euler or CVode are available
   char cell_model[50]; // cell model type and the type of the cell (if exist)
   short prior_risk; // 0: low, 1: intermediate, 2: high
-  double dt;        // time step
-  double dt_min;    // minimum time step (for adaptive dt)
-  double dt_max;    // maximum time step (for adaptive dt)
-  double dvm_min;    // minimum dVm/dt
-  double dvm_max;    // maximum dVm/dt
-  double dtw;       // writing step
-  double stim_dur;
-  double stim_amp_scale;
+  double time_step_min;    // acting as the default time step
+  double time_step_max;    // used only for CVode solver
+  double writing_step;
+  double stimulus_duration;
+  double stimulus_amplitude_scale;
   bool is_postprocessing;
   bool is_cvar;
   
@@ -37,9 +35,9 @@ struct Parameter
   char herg_file[100];
   char cvar_file[100]; // CVAR
   char drug_name[100];
-  char concs[50];
+  char drug_concentrations[50];
   char user_name[20];
-  char repol_states_folder[100];
+  char initial_values_directory[100];
   // restitution protocol
   double cl_decrement;
   double cl_end;

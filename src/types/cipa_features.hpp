@@ -41,7 +41,7 @@ struct Cipa_Features{
   multimap<double, string> time_series_data;
   multimap<double, double> vm_data;
   multimap<double, double> cai_data;
-  vector<double> repol_states;
+  vector<double> initial_values;
 
   Cipa_Features();
   Cipa_Features( const Cipa_Features &source );

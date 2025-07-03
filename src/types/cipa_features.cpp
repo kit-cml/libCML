@@ -54,8 +54,8 @@ void Cipa_Features::copy(const Cipa_Features &source)
   vm_data.insert( (source.vm_data).begin(), (source.vm_data).end() );
   cai_data.clear();
   cai_data.insert( (source.cai_data).begin(), (source.cai_data).end() );
-  repol_states.clear();
-  repol_states.insert( repol_states.end(), (source.repol_states).begin(), (source.repol_states).end() );
+  initial_values.clear();
+  initial_values.insert( initial_values.end(), (source.initial_values).begin(), (source.initial_values).end() );
 }
 
 void Cipa_Features::init(const double vm_val, const double ca_val)
@@ -89,5 +89,5 @@ void Cipa_Features::init(const double vm_val, const double ca_val)
   time_series_data.clear();
   vm_data.clear();
   cai_data.clear();
-  repol_states.clear();
+  initial_values.clear();
 }

@@ -276,6 +276,11 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "stimulus_amplitude_scale") == 0) {
       p_param->stimulus_amplitude_scale = strtod( value, NULL);
     }
+    else if (strcasecmp(key, "number_of_cpu") == 0) {
+      // let it empty since cpu_number used during mpiexec call.
+      // adding this only to override the error message.
+    }
+
 #ifdef TISSUE
     else if (strcasecmp(key, "diffusion_scale") == 0) {
       p_param->diffusion_scale = strtod( value, NULL);

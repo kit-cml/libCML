@@ -37,7 +37,7 @@ struct Parameter
   char drug_name[100];
   char drug_concentrations[50];
   char user_name[20];
-  char initial_values_directory[100];
+  char initial_values_zip_file[100];
   // restitution protocol
   double cl_decrement;
   double cl_end;

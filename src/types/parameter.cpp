@@ -41,7 +41,7 @@ void Parameter::init()
 // CVAR
   snprintf(cvar_file, sizeof(cvar_file), "%s", "./population/control.csv");
   snprintf(drug_name, sizeof(drug_name), "%s", "bepridil");
-  snprintf(initial_values_directory, sizeof(initial_values_directory), "../simulation_cpu/results/bepridil");
+  snprintf(initial_values_zip_file, sizeof(initial_values_zip_file), "bepridil_CiPAORdv1.0_endo_initial_values.zip");
   snprintf(drug_concentrations, sizeof(drug_concentrations), "%s", "99.0");
 
 #ifdef TISSUE
@@ -87,7 +87,7 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %s\n", "herg_file", herg_file );
   mpi_printf( 0, "%s -- %s\n", "is_cvar", is_cvar ? "true" : "false" );
   mpi_printf( 0, "%s -- %s\n", "cvar_file", cvar_file );
-  mpi_printf( 0, "%s -- %s\n", "initial_values_directory", initial_values_directory);
+  mpi_printf( 0, "%s -- %s\n", "initial_values_zip_file", initial_values_zip_file);
   mpi_printf( 0, "%s -- %s\n", "solver_type", solver_type);
   mpi_printf( 0, "%s -- %s\n", "is_postprocessing", is_postprocessing ? "true" : "false" );
   mpi_printf( 0, "%s -- %lf\n", "cycle_length", cycle_length);

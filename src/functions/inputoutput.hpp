@@ -42,6 +42,6 @@ int check_drug_data_content(const Drug_Block_Input &vec, const Parameter *p_para
 int assign_params(int *argc, char **argv, Parameter *p_param);
 
 // create concentration directories
-int create_drug_concentrations_directories( std::vector<double> &concs, const char *drug_name );
+int create_drug_concentrations_directories( std::vector<double> &concs, const Parameter *p_param );
 
 #endif

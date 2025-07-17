@@ -261,8 +261,8 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "mutation_type") == 0){
       strncpy( p_param->mutation_type, value, sizeof(p_param->mutation_type));
     }
-    else if (strcasecmp(key, "initial_values_directory") == 0 && strlen(value) > 0){
-      strncpy( p_param->initial_values_directory, value, sizeof(p_param->initial_values_directory));
+    else if (strcasecmp(key, "initial_values_zip_file") == 0 && strlen(value) > 0){
+      strncpy( p_param->initial_values_zip_file, value, sizeof(p_param->initial_values_zip_file));
     }
     else if (strcasecmp(key, "is_postprocessing") == 0){
       p_param->is_postprocessing = strtol( value, NULL, 10 );
@@ -326,24 +326,6 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
   return 0;
 }
 
-int create_drug_concentrations_directories( std::vector<double> &drug_concentrations, const char *drug_name )
+int create_drug_concentrations_directories( std::vector<double> &drug_concentrations, const Parameter *p_param)
 {
-  // constants to avoid magic values
-  static const double CONTROL_CONC = 0.;
-  char buffer[900];
-  char create_time_str[9];
-  int idx;
-
-  make_directory(cml::commons::RESULT_FOLDER);
-  snprintf( buffer, sizeof(buffer), "%s/%s", cml::commons::RESULT_FOLDER, drug_name);
-  if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
-  snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", cml::commons::RESULT_FOLDER, drug_name, CONTROL_CONC);
-  if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
-  for( idx = 0; idx < drug_concentrations.size(); idx++ )
-  { // begin concentration loop
-    snprintf( buffer, sizeof(buffer), "%s/%s/%.2lf", cml::commons::RESULT_FOLDER, drug_name, drug_concentrations[idx] );
-    if(is_file_existed(cml::commons::RESULT_FOLDER) == 0) make_directory(buffer);
-  } // end concentration loop
-
-  return 0;
 }

@@ -18,7 +18,7 @@
 namespace cml{
   
   namespace math{
-    // Usually used for unit conversion/
+    // Usually used for unit conversion.
     static const int METER_TO_MICROMETER = 1000000;
     static const int MILLI_TO_NANO = 1000000;
     static const int MICRO_TO_NANO = 1000;
@@ -26,6 +26,8 @@ namespace cml{
     static const double SECONDS_TO_DAYS = 0.0000115741;
     static const double SECONDS_TO_MINUTES = 0.01666666667;
     static const double MILLISECONDS_TO_SECONDS = 0.001;
+    // For something that need arbitrary small values.
+    static const double EPSILON = 1E-8;
   }
   
   namespace commons{
@@ -66,6 +68,5 @@ namespace cml{
   }
 
 }
-
 
 #endif

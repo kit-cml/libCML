@@ -1,7 +1,7 @@
 /*
    There are a total of 200 entries in the algebraic variable array.
-   There are a total of 49+1 entries in each of the rate and state variable arrays.
-   There are a total of 206+3 entries in the constant variable array.
+   There are a total of 49 entries in each of the rate and state variable arrays.
+   There are a total of 206+2 entries in the constant variable array.
  */
 
 #include "ohara_rudy_cipa_v1_2017.hpp"
@@ -520,8 +520,8 @@
 ohara_rudy_cipa_v1_2017::ohara_rudy_cipa_v1_2017()
 {
   algebraic_size = 200;
-  constants_size = 206+3;
-  states_size = 49+1;
+  constants_size = 208;
+  states_size = 49;
   ALGEBRAIC = new double[algebraic_size];
   CONSTANTS = new double[constants_size];
   RATES = new double[states_size];
@@ -799,7 +799,6 @@ CONSTANTS[b1] =  CONSTANTS[k1m]*CONSTANTS[MgADP];
 CONSTANTS[a2] = CONSTANTS[k2p];
 CONSTANTS[a4] = (( CONSTANTS[k4p]*CONSTANTS[MgATP])/CONSTANTS[Kmgatp])/(1.00000+CONSTANTS[MgATP]/CONSTANTS[Kmgatp]);
 CONSTANTS[Pnak] = (CONSTANTS[celltype]==1.00000 ?  CONSTANTS[Pnak_b]*0.900000 : CONSTANTS[celltype]==2.00000 ?  CONSTANTS[Pnak_b]*0.700000 : CONSTANTS[Pnak_b]);
-CONSTANTS[land_trpn] = 1.;
 }
 
 void ohara_rudy_cipa_v1_2017::___applyCVar(const double *cvar)
@@ -1114,7 +1113,6 @@ ALGEBRAIC[Bcai] = 1.00000/(1.00000+( CONSTANTS[cmdnmax]*CONSTANTS[kmcmdn])/pow(C
 ALGEBRAIC[Jtr] = CONSTANTS[Jtr_b] * (STATES[cansr] - STATES[cajsr])/100.000;
 ALGEBRAIC[Bcajsr] = 1.00000/(1.00000+( CONSTANTS[csqnmax]*CONSTANTS[kmcsqn])/pow(CONSTANTS[kmcsqn]+STATES[cajsr], 2.00000));
 
-//RATES[D] = CONSTANTS[cnc];
 RATES[D] = 0.;
 RATES[IC1] = (- ( CONSTANTS[A11]*exp( CONSTANTS[B11]*STATES[V])*STATES[IC1]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q11]))/10.0000) -  CONSTANTS[A21]*exp( CONSTANTS[B21]*STATES[V])*STATES[IC2]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q21]))/10.0000))+ CONSTANTS[A51]*exp( CONSTANTS[B51]*STATES[V])*STATES[C1]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q51]))/10.0000)) -  CONSTANTS[A61]*exp( CONSTANTS[B61]*STATES[V])*STATES[IC1]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q61]))/10.0000);
 RATES[IC2] = ((( CONSTANTS[A11]*exp( CONSTANTS[B11]*STATES[V])*STATES[IC1]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q11]))/10.0000) -  CONSTANTS[A21]*exp( CONSTANTS[B21]*STATES[V])*STATES[IC2]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q21]))/10.0000)) - ( CONSTANTS[A3]*exp( CONSTANTS[B3]*STATES[V])*STATES[IC2]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q3]))/10.0000) -  CONSTANTS[A4]*exp( CONSTANTS[B4]*STATES[V])*STATES[IO]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q4]))/10.0000)))+ CONSTANTS[A52]*exp( CONSTANTS[B52]*STATES[V])*STATES[C2]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q52]))/10.0000)) -  CONSTANTS[A62]*exp( CONSTANTS[B62]*STATES[V])*STATES[IC2]*exp(( (CONSTANTS[Temp] - 20.0000)*log(CONSTANTS[q62]))/10.0000);
@@ -1161,8 +1159,6 @@ RATES[nai] = ( - (ALGEBRAIC[INa]+ALGEBRAIC[INaL]+ 3.00000*ALGEBRAIC[INaCa_i]+ 3.
 RATES[nass] = ( - (ALGEBRAIC[ICaNa]+ 3.00000*ALGEBRAIC[INaCa_ss])*CONSTANTS[cm]*CONSTANTS[Acap])/( CONSTANTS[F]*CONSTANTS[vss]) - ALGEBRAIC[JdiffNa];
 RATES[V] = - (ALGEBRAIC[INa]+ALGEBRAIC[INaL]+ALGEBRAIC[Ito]+ALGEBRAIC[ICaL]+ALGEBRAIC[ICaNa]+ALGEBRAIC[ICaK]+ALGEBRAIC[IKr]+ALGEBRAIC[IKs]+ALGEBRAIC[IK1]+ALGEBRAIC[INaCa_i]+ALGEBRAIC[INaCa_ss]+ALGEBRAIC[INaK]+ALGEBRAIC[INab]+ALGEBRAIC[IKb]+ALGEBRAIC[IpCa]+ALGEBRAIC[ICab]+ALGEBRAIC[Istim]);
 RATES[cass] =  ALGEBRAIC[Bcass]*((( - (ALGEBRAIC[ICaL] -  2.00000*ALGEBRAIC[INaCa_ss])*CONSTANTS[cm]*CONSTANTS[Acap])/( 2.00000*CONSTANTS[F]*CONSTANTS[vss])+( ALGEBRAIC[Jrel]*CONSTANTS[vjsr])/CONSTANTS[vss]) - ALGEBRAIC[Jdiff]);
-// new for coupling
-RATES[ca_trpn] = CONSTANTS[trpnmax] * CONSTANTS[land_trpn];
 RATES[cai] =  ALGEBRAIC[Bcai]*((( - ((ALGEBRAIC[IpCa]+ALGEBRAIC[ICab]) -  2.00000*ALGEBRAIC[INaCa_i])*CONSTANTS[cm]*CONSTANTS[Acap])/( 2.00000*CONSTANTS[F]*CONSTANTS[vmyo]) - ( ALGEBRAIC[Jup]*CONSTANTS[vnsr])/CONSTANTS[vmyo])+( ALGEBRAIC[Jdiff]*CONSTANTS[vss])/CONSTANTS[vmyo]);
 RATES[cansr] = ALGEBRAIC[Jup] - ( ALGEBRAIC[Jtr]*CONSTANTS[vjsr])/CONSTANTS[vnsr];
 RATES[cajsr] =  ALGEBRAIC[Bcajsr]*(ALGEBRAIC[Jtr] - ALGEBRAIC[Jrel]);
@@ -1173,47 +1169,3 @@ void ohara_rudy_cipa_v1_2017::solveAnalytical( double dt )
 {
 
 }
-
-double ohara_rudy_cipa_v1_2017::set_time_step(double TIME,
-                                              double time_point,
-                                              double min_time_step,
-                                              double max_time_step,
-                                              double min_dV,
-                                              double max_dV) {
- double time_step = min_time_step;
- if (TIME <= time_point || (TIME - floor(TIME / CONSTANTS[BCL]) * CONSTANTS[BCL]) <= time_point) {
-    //printf("TIME <= time_point ms\n");
-    return time_step;
-    //printf("TIME = %E, dV = %E, time_step = %E\n",TIME, RATES[V] * time_step, time_step);
-  }
-  else {
-    //printf("TIME > time_point ms\n");
-    if (std::abs(RATES[V] * time_step) <= min_dV) {//Slow changes in V
-        //printf("dV/dt <= 0.2\n");
-        time_step = std::abs(max_dV / RATES[V]);
-        //Make sure time_step is between min time step and max_time_step
-        if (time_step < min_time_step) {
-            time_step = min_time_step;
-        }
-        else if (time_step > max_time_step) {
-            time_step = max_time_step;
-        }
-        //printf("TIME = %E, dV = %E, time_step = %E\n",TIME, RATES[V] * time_step, time_step);
-    }
-    else if (std::abs(RATES[V] * time_step) >= max_dV) {//Fast changes in V
-        //printf("dV/dt >= 0.8\n");
-        time_step = std::abs(min_dV / RATES[V]);
-        //Make sure time_step is not less than 0.005
-        if (time_step < min_time_step) {
-            time_step = min_time_step;
-        }
-        //printf("TIME = %E, dV = %E, time_step = %E\n",TIME, RATES[V] * time_step, time_step);
-    } else {
-        time_step = min_time_step;
-    }
-    return time_step;
-  }
-}
-
-
-

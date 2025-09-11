@@ -413,8 +413,7 @@ enum EN_OHARA_RUDY_CIPA_V1_2017_CONSTANTS_T{
   Pnak = 204,
   cnc = 205,
   Jtr_b = 206,
-  Jleak_b = 207,
-  land_trpn = 208,
+  Jleak_b = 207
 };
 
 
@@ -467,9 +466,7 @@ enum EN_OHARA_RUDY_CIPA_V1_2017_STATES_T{
   xs2 = 45,
   xk1 = 46,
   Jrelnp = 47,
-  Jrelp = 48,
-  ca_trpn = 49,
+  Jrelp = 48
 };
-
 
 #endif

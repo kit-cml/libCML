@@ -157,7 +157,7 @@ std::string get_system_uuid() {
 
 std::string get_hardware_id()
 {
-  return get_machine_uuid() + "==" + get_system_uuid();
+  return get_machine_uuid();
 }
 
 int validate_license()

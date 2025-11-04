@@ -118,6 +118,30 @@ time_t datetime_to_unixtime(const char *datetime_str )
   return unix_time;
 }
 
+
+void unixtime_to_datetime(time_t unix_time, char *datetime_str, size_t buf_size)
+{
+    struct tm *tm_info;
+
+    // Convert Unix timestamp to struct tm in local time
+    tm_info = localtime(&unix_time);
+    if (tm_info == NULL) {
+        fprintf(stderr, "Error converting Unix time to tm struct.\n");
+        return;
+    }
+
+    // Format datetime string as ISO 8601 (e.g., "2025-10-17T14:30:45")
+    if (strftime(datetime_str, buf_size, "%Y-%m-%dT%H:%M:%S", tm_info) == 0) {
+        fprintf(stderr, "strftime failed: buffer too small?\n");
+        return;
+    }
+
+#ifdef LICENSE_DEBUG
+    printf("Converted datetime: %s\n", datetime_str);
+#endif
+}
+
+
 std::string get_machine_uuid() {
   FILE *fp_machine_uuid = fopen(cml::security::MACHINE_UUID_FILE,"r");
   if (fp_machine_uuid == NULL) {
@@ -176,7 +200,7 @@ int validate_license()
   printf("Hardware ID: %s\n", hardware_id.c_str());
 #endif
 
-  FILE *fp_license = fopen("cardiosim_license.dat","rb");
+  FILE *fp_license = fopen("/usr/share/cardiosim_license.dat","rb");
   if(fp_license == NULL){
     printf("Cannot open license file! Make sure the cardiosim_license.dat is existing!\n");
     return -1;
@@ -185,7 +209,7 @@ int validate_license()
   size_t size;
   fread(&size, sizeof(size_t), 1, fp_license);
 
-  // Read the string data
+   // Read the string data
   char* buffer = new char[size + 1];  // Allocate buffer (+1 for null-terminator)
   fread(buffer, sizeof(char), size, fp_license);
   buffer[size] = '\0';  // Null-terminate the string
@@ -198,6 +222,14 @@ int validate_license()
 
   fclose(fp_license);
 
+  // Compute license expiration time
+  time_t license_expire_time = license_unix_time + (cml::security::TRIAL_PERIOD_DAYS * cml::math::DAYS_TO_SECONDS);
+
+  // Convert expiration time to string
+  char expire_date_str[100];
+  unixtime_to_datetime(license_expire_time, expire_date_str, 100);
+
+
   // uncomment only for debugging.
 #ifdef LICENSE_DEBUG
   printf("Data from license file: %ld\n%s\n%ld\n", size, license_hardware_id.c_str(), license_unix_time);
@@ -207,9 +239,14 @@ int validate_license()
   printf("Correct hardware: %d\nPeriod passed from the beginning: %ld days\n",
   license_hardware_id.compare(hardware_id), days_elapsed);
 #endif
+  char start_date_str[100];
+  char end_date_Str[100];
+  unixtime_to_datetime(license_unix_time, start_date_str, 100);
+  printf("License created on: %s\n", start_date_str);
+  printf("License expired on: %s\n", expire_date_str);
   printf("Period passed from the beginning: %ld days\n", days_elapsed);
   if( license_hardware_id.compare(hardware_id) != 0 || labs(license_unix_time-unix_time) > (cml::security::TRIAL_PERIOD_DAYS * cml::math::DAYS_TO_SECONDS)  ){
-    fprintf(stderr, "Please renew the license by contacting MetaHeart!\n");
+    fprintf(stderr, "Please renew the license!\n");
     return -1;
   }
 

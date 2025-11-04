@@ -24,6 +24,7 @@ static size_t write_callback(void *contents, size_t size, size_t nmemb, void *us
 int get_response_from_api(ApiResponse *p_response);
 time_t get_unix_time_from_json(ApiResponse *p_response);
 time_t datetime_to_unixtime(const char *datetime_str );
+void unixtime_to_datetime(time_t unix_time, char *datetime_str, size_t buf_size);
 
 // All functions related to the hardware.
 std::string get_machine_uuid();

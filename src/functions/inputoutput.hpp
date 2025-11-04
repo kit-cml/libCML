@@ -36,6 +36,7 @@ int is_file_existed(const char* pathname);
 // for both IC50-Hill and hERG vectors.
 template <typename RowType, typename InputType>
 int get_data_from_file(const char *filename, InputType &vec);
+int get_cvar_data_from_file(const char *filename, Cvar_Input &vec);
 int check_drug_data_content(const Drug_Block_Input &vec, const Parameter *p_param);
 
 // parameter assignment

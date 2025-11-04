@@ -803,26 +803,53 @@ CONSTANTS[Pnak] = (CONSTANTS[celltype]==1.00000 ?  CONSTANTS[Pnak_b]*0.900000 : 
 
 void ohara_rudy_cipa_v1_2017::___applyCVar(const double *cvar)
 {
-  CONSTANTS[GNa] *= cvar[0];		// GNa
-  CONSTANTS[GNaL_b] *= cvar[1];		// GNaL
-  CONSTANTS[Gto_b] *= cvar[2];		// Gto
-  CONSTANTS[GKr_b] *= cvar[3];		// GKr
-  CONSTANTS[GKs_b] *= cvar[4];		// GKs
-  CONSTANTS[GK1_b] *= cvar[5];		// GK1
-  CONSTANTS[Gncx_b] *= cvar[6];		// GNaCa
-  CONSTANTS[GKb_b] *= cvar[7];		// GKb
-  CONSTANTS[PCa_b] *= cvar[8];		// PCa
-  CONSTANTS[Pnak_b] *= cvar[9];		// INaK
-  CONSTANTS[PNab] *= cvar[10];		// PNab
-  CONSTANTS[PCab] *= cvar[11];		// PCab
-  CONSTANTS[GpCa] *= cvar[12];		// GpCa
-  CONSTANTS[KmCaMK] *= cvar[17];	// KCaMK
+  mpi_printf(0, "Before population:\n");
+  mpi_printf(0, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s:\n",
+             "GNa","GNaL_b","Gto_b","GKr_b","GKs_b","GK1_b","Gncx_b","GKb_b",
+             "PCa_b","Pnak_b","PNab","PCab","GpCa","Jrel_b","Jup_b","Jtr_b",
+             "Jleak_b","KmCaMK");
+  mpi_printf(0, "%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+             CONSTANTS[GNa],CONSTANTS[GNaL_b],CONSTANTS[Gto_b],CONSTANTS[GKr_b],CONSTANTS[GKs_b],CONSTANTS[GK1_b],CONSTANTS[Gncx_b],CONSTANTS[GKb_b],
+             CONSTANTS[PCa_b],CONSTANTS[Pnak_b],CONSTANTS[PNab],CONSTANTS[PCab],CONSTANTS[GpCa],CONSTANTS[Jrel_b],CONSTANTS[Jup_b],CONSTANTS[Jtr_b],
+             CONSTANTS[Jleak_b],CONSTANTS[KmCaMK]);
+  if(cvar == NULL){
+    mpi_printf(0, "CVar array got NULL\n");
+  }
+  else{
+    for(int idx = 0; idx < 17; idx++) mpi_printf(0, "CVar 0: %lf\t\tCvar 1: %lf\n", cvar[0], cvar[1]);
+  }
+  
+#ifdef FREEZED
+  CONSTANTS[GNa] *= cvar[0];    // GNa
+  CONSTANTS[GNaL_b] *= cvar[1];   // GNaL
+  CONSTANTS[Gto_b] *= cvar[2];    // Gto
+  CONSTANTS[GKr_b] *= cvar[3];    // GKr
+  CONSTANTS[GKs_b] *= cvar[4];    // GKs
+  CONSTANTS[GK1_b] *= cvar[5];    // GK1
+  CONSTANTS[Gncx_b] *= cvar[6];   // GNaCa
+  CONSTANTS[GKb_b] *= cvar[7];    // GKb
+  CONSTANTS[PCa_b] *= cvar[8];    // PCa
+  CONSTANTS[Pnak_b] *= cvar[9];   // INaK
+  CONSTANTS[PNab] *= cvar[10];    // PNab
+  CONSTANTS[PCab] *= cvar[11];    // PCab
+  CONSTANTS[GpCa] *= cvar[12];    // GpCa
+  CONSTANTS[KmCaMK] *= cvar[17];  // KCaMK
 
   // Additional constants
-  CONSTANTS[Jrel_b] *= cvar[13];	// SERCA_Total (release)
-  CONSTANTS[Jup_b] *= cvar[14];	// RyR_Total (uptake)
-  CONSTANTS[Jtr_b] *= cvar[15];	// Trans_Total (NSR to JSR translocation)
-  CONSTANTS[Jleak_b] *= cvar[16];	// Leak_Total (Ca leak from NSR)
+  CONSTANTS[Jrel_b] *= cvar[13];  // SERCA_Total (release)
+  CONSTANTS[Jup_b] *= cvar[14]; // RyR_Total (uptake)
+  CONSTANTS[Jtr_b] *= cvar[15]; // Trans_Total (NSR to JSR translocation)
+  CONSTANTS[Jleak_b] *= cvar[16]; // Leak_Total (Ca leak from NSR)
+#endif
+  mpi_printf(0, "After population:\n");
+  mpi_printf(0, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s:\n",
+             "GNa","GNaL_b","Gto_b","GKr_b","GKs_b","GK1_b","Gncx_b","GKb_b",
+             "PCa_b","Pnak_b","PNab","PCab","GpCa","Jrel_b","Jup_b","Jtr_b",
+             "Jleak_b","KmCaMK");
+  mpi_printf(0, "%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+             CONSTANTS[GNa],CONSTANTS[GNaL_b],CONSTANTS[Gto_b],CONSTANTS[GKr_b],CONSTANTS[GKs_b],CONSTANTS[GK1_b],CONSTANTS[Gncx_b],CONSTANTS[GKb_b],
+             CONSTANTS[PCa_b],CONSTANTS[Pnak_b],CONSTANTS[PNab],CONSTANTS[PCab],CONSTANTS[GpCa],CONSTANTS[Jrel_b],CONSTANTS[Jup_b],CONSTANTS[Jtr_b],
+             CONSTANTS[Jleak_b],CONSTANTS[KmCaMK]);
 }
 
 void ohara_rudy_cipa_v1_2017::___applyDrugEffect(double conc, const double *hill)

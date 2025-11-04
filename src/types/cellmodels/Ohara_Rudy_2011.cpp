@@ -648,6 +648,16 @@ CONSTANTS[Jleak_b] = 1.0;	// Leak_Total (Ca leak from NSR)
 }
 
 void Ohara_Rudy_2011::___applyCVar(const double *cvar) {
+  mpi_printf(0, "Before population:\n");
+  mpi_printf(0, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s:\n",
+             "GNa","GNaL_b","Gto_b","GKr_b","GKs_b","GK1_b","Gncx_b","GKb_b",
+             "PCa_b","Pnak_b","PNab","PCab","GpCa","Jrel_b","Jup_b","Jtr_b",
+             "Jleak_b","KmCaMK");
+  mpi_printf(0, "%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+             CONSTANTS[GNa],CONSTANTS[GNaL_b],CONSTANTS[Gto_b],CONSTANTS[GKr_b],CONSTANTS[GKs_b],CONSTANTS[GK1_b],CONSTANTS[Gncx_b],CONSTANTS[GKb_b],
+             CONSTANTS[PCa_b],CONSTANTS[Pnak_b],CONSTANTS[PNab],CONSTANTS[PCab],CONSTANTS[GpCa],CONSTANTS[Jrel_b],CONSTANTS[Jup_b],CONSTANTS[Jtr_b],
+             CONSTANTS[Jleak_b],CONSTANTS[KmCaMK]);
+#ifdef FREEZED
   CONSTANTS[GNa] *= cvar[0];		// GNa
   CONSTANTS[GNaL_b] *= cvar[1];		// GNaL
   CONSTANTS[Gto_b] *= cvar[2];		// Gto
@@ -662,12 +672,22 @@ void Ohara_Rudy_2011::___applyCVar(const double *cvar) {
   CONSTANTS[PCab] *= cvar[11];		// PCab
   CONSTANTS[GpCa] *= cvar[12];		// GpCa
   CONSTANTS[KmCaMK] *= cvar[17];	// KCaMK
-
   // Additional constants
   CONSTANTS[Jrel_b] *= cvar[13];	// SERCA_Total (release)
   CONSTANTS[Jup_b] *= cvar[14];	// RyR_Total (uptake)
   CONSTANTS[Jtr_b] *= cvar[15];	// Trans_Total (NSR to JSR translocation)
   CONSTANTS[Jleak_b] *= cvar[16];	// Leak_Total (Ca leak from NSR)
+#endif
+  mpi_printf(0, "After population:\n");
+  mpi_printf(0, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s:\n",
+             "GNa","GNaL_b","Gto_b","GKr_b","GKs_b","GK1_b","Gncx_b","GKb_b",
+             "PCa_b","Pnak_b","PNab","PCab","GpCa","Jrel_b","Jup_b","Jtr_b",
+             "Jleak_b","KmCaMK");
+  mpi_printf(0, "%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+             CONSTANTS[GNa],CONSTANTS[GNaL_b],CONSTANTS[Gto_b],CONSTANTS[GKr_b],CONSTANTS[GKs_b],CONSTANTS[GK1_b],CONSTANTS[Gncx_b],CONSTANTS[GKb_b],
+             CONSTANTS[PCa_b],CONSTANTS[Pnak_b],CONSTANTS[PNab],CONSTANTS[PCab],CONSTANTS[GpCa],CONSTANTS[Jrel_b],CONSTANTS[Jup_b],CONSTANTS[Jtr_b],
+             CONSTANTS[Jleak_b],CONSTANTS[KmCaMK]);
+
 }
 
 void Ohara_Rudy_2011::___applyDutta()

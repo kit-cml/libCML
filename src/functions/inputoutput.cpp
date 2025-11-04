@@ -118,6 +118,37 @@ int get_data_from_file(const char *file_name, InputType &vec)
   return 0;
 }
 
+int get_cvar_data_from_file(const char *file_name, Cvar_Input &vec)
+{
+  FILE *fp_drugs;
+  char *token, buffer[255];
+  Cvar_Row temp_array;
+  short idx;
+
+  if ((fp_drugs = fopen(file_name, "r")) == NULL) {
+    printf("Cannot open file %s\n", file_name);
+    return 1;
+  }
+
+  constexpr size_t expected_cols = sizeof(temp_array.data) / sizeof(double);
+
+  fgets(buffer, sizeof(buffer), fp_drugs); // skip header
+  while (fgets(buffer, sizeof(buffer), fp_drugs) != NULL) { // begin line reading
+    token = strtok(buffer, ",");
+    idx = 0;
+    while (token != NULL) { // begin data tokenizing
+      if(idx >= expected_cols) break;
+      temp_array.data[idx++] = strtod(token, NULL);
+      token = strtok(NULL, ",");
+    } // end data tokenizing
+    vec.push_back(temp_array);
+  } // end line reading
+
+  fclose(fp_drugs);
+  return 0;
+}
+
+
 
 int check_drug_data_content(const Drug_Block_Input &vec, const Parameter *p_param)
 {

@@ -25,9 +25,18 @@ struct Parameter
   double pca_scale;
   double gna_scale;
   double gnal_scale;
-  double gnab_scale;
-  double gcab_scale;
+  double pnab_scale;
+  double pcab_scale;
   double gncx_scale;
+  double gk_scale;
+  double gcl_scale;
+  double gcat_scale;
+  double gh_scale;
+  double gk2_scale;
+  double gka_scale;
+  double gkca_scale;
+  double gb_scale;
+  double gns_scale;
   double tau_h_scale;
   // end conductance scaling vars
   char mutation_type[20];

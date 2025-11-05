@@ -268,14 +268,41 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "gnal_scale") == 0) {
       p_param->gnal_scale = strtod( value, NULL);
     }
-    else if (strcasecmp(key, "gnab_scale") == 0) {
-      p_param->gnab_scale = strtod( value, NULL);
+    else if (strcasecmp(key, "pnab_scale") == 0) {
+      p_param->pnab_scale = strtod( value, NULL);
     }
-    else if (strcasecmp(key, "gcab_scale") == 0) {
-      p_param->gcab_scale = strtod( value, NULL);
+    else if (strcasecmp(key, "pcab_scale") == 0) {
+      p_param->pcab_scale = strtod( value, NULL);
     }
     else if (strcasecmp(key, "gncx_scale") == 0) {
       p_param->gncx_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gk_scale") == 0) {
+      p_param->gk_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gcl_scale") == 0) {
+      p_param->gcl_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gcat_scale") == 0) {
+      p_param->gcat_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gh_scale") == 0) {
+      p_param->gh_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gk2_scale") == 0) {
+      p_param->gk2_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gka_scale") == 0) {
+      p_param->gka_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gkca_scale") == 0) {
+      p_param->gkca_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gb_scale") == 0) {
+      p_param->gb_scale = strtod( value, NULL);
+    }
+    else if (strcasecmp(key, "gns_scale") == 0) {
+      p_param->gns_scale = strtod( value, NULL);
     }
     else if (strcasecmp(key, "tau_h_scale") == 0) {
       p_param->tau_h_scale = strtod( value, NULL);

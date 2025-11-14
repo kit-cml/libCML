@@ -32,8 +32,10 @@ public:
   virtual void initConsts(double type){}
   virtual void initConsts(double type, bool is_dutta){}
   virtual void initConsts(double type, double conc, const double *hill){}
+  virtual void initConsts(double conc, const double *hill){}
   virtual void initConsts(double type, double conc, const double *hill, bool is_dutta){}
   virtual void initConsts(double type, double conc, const double *hill, bool is_dutta, const double *cvar) {}
+  virtual void initConsts(double conc, const double *hill, const double *cvar) {}
   virtual void initConsts(double type, double conc, const double *hill, const double* herg){}
   virtual void initConsts(double type, double conc, const double *hill, const double* herg, const double* cvar){}
   virtual void initConsts( bool is_skinned, bool BETA, double* y){}

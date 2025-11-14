@@ -5,7 +5,7 @@
 
 // data structure for IC50-Hill pairs
 // and also hERG parameters.
-struct Cvar_Row { double data[18]; };
+typedef struct row_data2 { double data[18]; } Cvar_Row;
 typedef std::vector< Cvar_Row > Cvar_Input;
 
 #endif

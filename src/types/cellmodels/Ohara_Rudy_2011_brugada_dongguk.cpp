@@ -499,7 +499,7 @@ STATES[cajsr] = 1.2;
 STATES[cai] = 1e-4;
 CONSTANTS[cm] = 1;
 CONSTANTS[PKNa] = 0.01833;
-CONSTANTS[mssV1] = 29.57;
+CONSTANTS[mssV1] = 39.57;
 CONSTANTS[mssV2] = 9.871;
 CONSTANTS[mtV1] = 11.64;
 CONSTANTS[mtV2] = 34.77;
@@ -508,7 +508,7 @@ CONSTANTS[mtD2] = 8.552;
 CONSTANTS[mtV3] = 77.42;
 CONSTANTS[mtV4] = 5.955;
 STATES[m] = 0;
-CONSTANTS[hssV1] = 72.9;
+CONSTANTS[hssV1] = 82.9;
 CONSTANTS[hssV2] = 6.086;
 CONSTANTS[Ahf] = 0.99;
 STATES[hf] = 1;
@@ -522,7 +522,7 @@ CONSTANTS[thL] = 200;
 STATES[hL] = 1;
 STATES[hLp] = 1;
 CONSTANTS[GNaL_b] = 0.0075;
-CONSTANTS[Gto_b] = 3.365*0.02;
+CONSTANTS[Gto_b] = 3.3365*0.02;
 STATES[a] = 0;
 STATES[iF] = 1;
 STATES[iS] = 1;
@@ -648,6 +648,17 @@ CONSTANTS[Jleak_b] = 1.0;	// Leak_Total (Ca leak from NSR)
 }
 
 void Ohara_Rudy_2011_brugada_dongguk::___applyCVar(const double *cvar) {
+
+  mpi_printf(0, "Before population:\n");
+  mpi_printf(0, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s:\n",
+             "GNa","GNaL_b","Gto_b","GKr_b","GKs_b","GK1_b","Gncx_b","GKb_b",
+             "PCa_b","Pnak_b","PNab","PCab","GpCa","Jrel_b","Jup_b","Jtr_b",
+             "Jleak_b","KmCaMK");
+  mpi_printf(0, "%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+             CONSTANTS[GNa],CONSTANTS[GNaL_b],CONSTANTS[Gto_b],CONSTANTS[GKr_b],CONSTANTS[GKs_b],CONSTANTS[GK1_b],CONSTANTS[Gncx_b],CONSTANTS[GKb_b],
+             CONSTANTS[PCa_b],CONSTANTS[Pnak_b],CONSTANTS[PNab],CONSTANTS[PCab],CONSTANTS[GpCa],CONSTANTS[Jrel_b],CONSTANTS[Jup_b],CONSTANTS[Jtr_b],
+             CONSTANTS[Jleak_b],CONSTANTS[KmCaMK]);
+
   CONSTANTS[GNa] *= cvar[0];		// GNa
   CONSTANTS[GNaL_b] *= cvar[1];		// GNaL
   CONSTANTS[Gto_b] *= cvar[2];		// Gto
@@ -668,6 +679,16 @@ void Ohara_Rudy_2011_brugada_dongguk::___applyCVar(const double *cvar) {
   CONSTANTS[Jup_b] *= cvar[14];	// RyR_Total (uptake)
   CONSTANTS[Jtr_b] *= cvar[15];	// Trans_Total (NSR to JSR translocation)
   CONSTANTS[Jleak_b] *= cvar[16];	// Leak_Total (Ca leak from NSR)
+
+  mpi_printf(0, "After population:\n");
+  mpi_printf(0, "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s:\n",
+             "GNa","GNaL_b","Gto_b","GKr_b","GKs_b","GK1_b","Gncx_b","GKb_b",
+             "PCa_b","Pnak_b","PNab","PCab","GpCa","Jrel_b","Jup_b","Jtr_b",
+             "Jleak_b","KmCaMK");
+  mpi_printf(0, "%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+             CONSTANTS[GNa],CONSTANTS[GNaL_b],CONSTANTS[Gto_b],CONSTANTS[GKr_b],CONSTANTS[GKs_b],CONSTANTS[GK1_b],CONSTANTS[Gncx_b],CONSTANTS[GKb_b],
+             CONSTANTS[PCa_b],CONSTANTS[Pnak_b],CONSTANTS[PNab],CONSTANTS[PCab],CONSTANTS[GpCa],CONSTANTS[Jrel_b],CONSTANTS[Jup_b],CONSTANTS[Jtr_b],
+             CONSTANTS[Jleak_b],CONSTANTS[KmCaMK]);
 }
 
 void Ohara_Rudy_2011_brugada_dongguk::___applyDutta()

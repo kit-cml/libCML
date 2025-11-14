@@ -7,6 +7,7 @@
 #include "grandi_2011_atrial_with_meta.hpp"
 #include <cmath>
 #include <cstdlib>
+#include "../../functions/inputoutput.hpp"
 
 /*
  * CONSTANTS[Bmax_CaM] is Bmax_CaM in component buffca (mM).
@@ -53,7 +54,7 @@
  * CONSTANTS[Vjn] is Vjn in component geom (liter).
  * CONSTANTS[Vmyo] is Vmyo in component geom (liter).
  * CONSTANTS[Vsl] is Vsl in component geom (liter).
- * STATES[Ca_i] is Ca_i in component calcium (mM).
+ * STATES[cai] is cai in component calcium (mM).
  * TIME is time in component engine (ms).
  * CONSTANTS[Mg_i] is Mg_i in component ion (mM).
  * STATES[Ca_jn] is Ca_jn in component calcium (mM).
@@ -152,7 +153,7 @@
  * CONSTANTS[KdClCa] is KdClCa in component iclca (mM).
  * ALGEBRAIC[IK1] is IK1 in component ik1 (A_per_F).
  * CONSTANTS[gK1] is gK1 in component ik1 (mS_per_uF).
- * CONSTANTS[gK1_max] is gK1_max in component ik1 (mS_per_uF).
+ * CONSTANTS[GK1_b] is GK1_b in component ik1 (mS_per_uF).
  * ALGEBRAIC[ik1_inf] is ik1_inf in component ik1 (dimensionless).
  * ALGEBRAIC[EK] is EK in component nernst (mV).
  * ALGEBRAIC[ik1_inf_a] is ik1_inf_a in component ik1_ik1_inf (mS_per_uF).
@@ -164,7 +165,7 @@
  * ALGEBRAIC[kp] is kp in component ikp (dimensionless).
  * ALGEBRAIC[IKr] is IKr in component ikr (A_per_F).
  * CONSTANTS[gKr] is gKr in component ikr (mS_per_uF).
- * CONSTANTS[gKr_max] is gKr_max in component ikr (mS_per_uF).
+ * CONSTANTS[GKr_b] is GKr_b in component ikr (mS_per_uF).
  * ALGEBRAIC[rr] is rr in component ikr (dimensionless).
  * STATES[xr] is xr in component ikr (dimensionless).
  * ALGEBRAIC[ikr_xr_inf] is ikr_xr_inf in component ikr_xr (dimensionless).
@@ -174,7 +175,7 @@
  * ALGEBRAIC[IKs_jn] is IKs_jn in component iks (A_per_F).
  * ALGEBRAIC[IKs_sl] is IKs_sl in component iks (A_per_F).
  * CONSTANTS[gKs_jn] is gKs_jn in component iks (mS_per_uF).
- * CONSTANTS[gKs_max] is gKs_max in component iks (mS_per_uF).
+ * CONSTANTS[GKs_b] is GKs_b in component iks (mS_per_uF).
  * CONSTANTS[gKs_sl] is gKs_sl in component iks (mS_per_uF).
  * CONSTANTS[pNaK] is pNaK in component iks (dimensionless).
  * STATES[xs] is xs in component iks (dimensionless).
@@ -194,7 +195,7 @@
  * ALGEBRAIC[INa_jn] is INa_jn in component ina (A_per_F).
  * ALGEBRAIC[INa_sl] is INa_sl in component ina (A_per_F).
  * CONSTANTS[gNa] is gNa in component ina (mS_per_uF).
- * CONSTANTS[gNa_max] is gNa_max in component ina (mS_per_uF).
+ * CONSTANTS[GNa] is GNa in component ina (mS_per_uF).
  * STATES[h] is h in component ina (dimensionless).
  * STATES[j] is j in component ina (dimensionless).
  * STATES[m] is m in component ina (dimensionless).
@@ -245,7 +246,7 @@
  * ALGEBRAIC[INaL_jn] is INaL_jn in component inal (A_per_F).
  * ALGEBRAIC[INaL_sl] is INaL_sl in component inal (A_per_F).
  * CONSTANTS[gNaL] is gNaL in component inal (mS_per_uF).
- * CONSTANTS[gNaL_max] is gNaL_max in component inal (mS_per_uF).
+ * CONSTANTS[GNaL_b] is GNaL_b in component inal (mS_per_uF).
  * STATES[hl] is hl in component inal (dimensionless).
  * STATES[ml] is ml in component inal (dimensionless).
  * ALGEBRAIC[inal_hl_inf] is inal_hl_inf in component inal_hl (dimensionless).
@@ -264,7 +265,7 @@
  * CONSTANTS[ipca_IpCa_sl_b] is ipca_IpCa_sl_b in component ipca_IpCa_sl (dimensionless).
  * ALGEBRAIC[Ito] is Ito in component ito (A_per_F).
  * CONSTANTS[gto] is gto in component ito (mS_per_uF).
- * CONSTANTS[gto_max] is gto_max in component ito (mS_per_uF).
+ * CONSTANTS[Gto_b] is Gto_b in component ito (mS_per_uF).
  * STATES[x] is x in component ito (dimensionless).
  * STATES[y] is y in component ito (dimensionless).
  * ALGEBRAIC[ito_x_inf] is ito_x_inf in component ito_x (dimensionless).
@@ -305,7 +306,7 @@
  * CONSTANTS[amp] is amp in component stimulus (A_per_F).
  * ALGEBRAIC[pace] is pace in component stimulus (dimensionless).
  * CONSTANTS[duration] is duration in component stimulus (ms).
- * CONSTANTS[stim_offset] is stim_offset in component stimulus (ms).
+ * CONSTANTS[stim_start] is stim_start in component stimulus (ms).
  * CONSTANTS[BCL] is BCL in component stimulus (ms).
  * RATES[CaM] is d/dt CaM in component buffca (mM).
  * RATES[TnCL] is d/dt TnCL in component buffca (mM).
@@ -320,7 +321,7 @@
  * RATES[SLH_sl] is d/dt SLH_sl in component buffca (mM).
  * RATES[NaB_jn] is d/dt NaB_jn in component buffna (mM).
  * RATES[NaB_sl] is d/dt NaB_sl in component buffna (mM).
- * RATES[Ca_i] is d/dt Ca_i in component calcium (mM).
+ * RATES[cai] is d/dt cai in component calcium (mM).
  * RATES[Ca_jn] is d/dt Ca_jn in component calcium (mM).
  * RATES[Ca_sl] is d/dt Ca_sl in component calcium (mM).
  * RATES[Ca_sr] is d/dt Ca_sr in component calcium (mM).
@@ -370,7 +371,7 @@ delete []RATES;
 delete []STATES;
 }
 
-void grandi_2011_atrial_with_meta::initConsts()
+void grandi_2011_atrial_with_meta::___initConsts()
 {
 CONSTANTS[Bmax_CaM] = 0.024;
 CONSTANTS[Bmax_SR] = 0.0171;
@@ -405,7 +406,7 @@ CONSTANTS[kon_sr] = 100.0;
 CONSTANTS[kon_tnchca] = 2.37;
 CONSTANTS[kon_tnchmg] = 0.003;
 CONSTANTS[kon_tncl] = 32.7;
-STATES[Ca_i] =  2.10808768153058460e-04;
+STATES[cai] =  2.10808768153058460e-04;
 CONSTANTS[Mg_i] = 1.0;
 STATES[Ca_jn] =  3.25814677291117296e-04;
 STATES[Ca_sl] =  2.33018340557575125e-04;
@@ -455,18 +456,18 @@ CONSTANTS[Na_o] = 140.0;
 CONSTANTS[gClB] = 0.009;
 CONSTANTS[GClCa] = 0.0548;
 CONSTANTS[KdClCa] = 0.1;
-CONSTANTS[gK1_max] = 0.0525;
+CONSTANTS[GK1_b] = 0.0525;
 CONSTANTS[gKp] = 0.002;
-CONSTANTS[gKr_max] = 0.035;
+CONSTANTS[GKr_b] = 0.035;
 STATES[xr] =  1.31290096227093382e-03;
-CONSTANTS[gKs_max] = 0.0035;
+CONSTANTS[GKs_b] = 0.0035;
 CONSTANTS[pNaK] = 0.01833;
 STATES[xs] =  7.49436760722081534e-03;
 STATES[Na_i] =  9.15199678386256998e+00;
 CONSTANTS[gKur_max] = 0.045;
 STATES[ikur_r] =  3.93548562883350357e-04;
 STATES[s] =  9.58234428284286399e-01;
-CONSTANTS[gNa_max] = 23.0;
+CONSTANTS[GNa] = 23.0;
 STATES[h] =  3.15482710277587786e-01;
 STATES[j] =  2.48034071360795916e-01;
 STATES[m] =  1.89326933812916480e-02;
@@ -482,7 +483,7 @@ CONSTANTS[ksat] = 0.27;
 CONSTANTS[nu] = 0.35;
 CONSTANTS[IbarNaK] = 1.26;
 CONSTANTS[KmKo] = 1.5;
-CONSTANTS[gNaL_max] = 0.0025;
+CONSTANTS[GNaL_b] = 0.0025;
 STATES[hl] =  3.79829335413739144e-02;
 STATES[ml] =  1.01974216400706526e-02;
 CONSTANTS[inal_hl_tau] = 600.0;
@@ -491,7 +492,7 @@ CONSTANTS[Cl_o] = 150.0;
 CONSTANTS[IbarSLCaP] = 0.0471;
 CONSTANTS[KmPCa] = 0.0005;
 CONSTANTS[Q10SLCaP] = 2.35;
-CONSTANTS[gto_max] = 0.165;
+CONSTANTS[Gto_b] = 0.165;
 STATES[x] =  1.37939236359928058e-03;
 STATES[y] =  9.45874848392074696e-01;
 CONSTANTS[R] = 8314.0;
@@ -513,7 +514,8 @@ STATES[o] =  2.01567245823636694e-06;
 STATES[ryr_r] =  8.00819151705148946e-01;
 CONSTANTS[amp] = -12.5;
 CONSTANTS[duration] = 5.0;
-CONSTANTS[stim_offset] = 50.0;
+//CONSTANTS[stim_start] = 50.0;
+CONSTANTS[stim_start] = 10.0;
 CONSTANTS[BCL] = 1000.0;
 CONSTANTS[koff_tncl] =  (1.00000+ 0.500000*CONSTANTS[ISO])*0.0196000;
 CONSTANTS[Vcell] =  ( ( CONSTANTS[pi]*pow(CONSTANTS[cell_radius], 2.00000))*CONSTANTS[cell_length])*1.00000e-15;
@@ -523,17 +525,17 @@ CONSTANTS[pK] =  ( (1.00000+ 0.500000*CONSTANTS[ISO])*(1.00000 -  0.500000*CONST
 CONSTANTS[pNa] =  ( (1.00000+ 0.500000*CONSTANTS[ISO])*(1.00000 -  0.500000*CONSTANTS[AF]))*CONSTANTS[pNa_max];
 CONSTANTS[Fsl_CaL] = 1.00000 - CONSTANTS[Fjn_CaL];
 CONSTANTS[FRT] = (CONSTANTS[F]/CONSTANTS[R])/CONSTANTS[T];
-CONSTANTS[gK1] =  ( (1.00000+CONSTANTS[AF])* pow((CONSTANTS[K_o]/5.40000), 1.0 / 2))*CONSTANTS[gK1_max];
-CONSTANTS[gKr] =  CONSTANTS[gKr_max]* pow((CONSTANTS[K_o]/5.40000), 1.0 / 2);
-CONSTANTS[gKs_jn] =  ((1.00000+CONSTANTS[AF])+ 2.00000*CONSTANTS[ISO])*CONSTANTS[gKs_max];
-CONSTANTS[gKs_sl] =  ((1.00000+CONSTANTS[AF])+ 2.00000*CONSTANTS[ISO])*CONSTANTS[gKs_max];
+CONSTANTS[gK1] =  ( (1.00000+CONSTANTS[AF])* pow((CONSTANTS[K_o]/5.40000), 1.0 / 2))*CONSTANTS[GK1_b];
+CONSTANTS[gKr] =  CONSTANTS[GKr_b]* pow((CONSTANTS[K_o]/5.40000), 1.0 / 2);
+CONSTANTS[gKs_jn] =  ((1.00000+CONSTANTS[AF])+ 2.00000*CONSTANTS[ISO])*CONSTANTS[GKs_b];
+CONSTANTS[gKs_sl] =  ((1.00000+CONSTANTS[AF])+ 2.00000*CONSTANTS[ISO])*CONSTANTS[GKs_b];
 CONSTANTS[gKur] =  ( ( (1.00000 -  0.500000*CONSTANTS[AF])*(1.00000+ 2.00000*CONSTANTS[ISO]))*(1.00000+ 0.200000*CONSTANTS[RA]))*CONSTANTS[gKur_max];
-CONSTANTS[gNa] =  CONSTANTS[gNa_max]*(1.00000 -  0.100000*CONSTANTS[AF]);
+CONSTANTS[gNa] =  CONSTANTS[GNa]*(1.00000 -  0.100000*CONSTANTS[AF]);
 CONSTANTS[IbarNCX] =  (1.00000+ 0.400000*CONSTANTS[AF])*CONSTANTS[IbarNCX_max];
 CONSTANTS[KmNaip] =  11.0000*(1.00000 -  0.250000*CONSTANTS[ISO]);
 CONSTANTS[sigma] = (exp(CONSTANTS[Na_o]/67.3000) - 1.00000)/7.00000;
-CONSTANTS[gNaL] =  CONSTANTS[gNaL_max]*CONSTANTS[AF];
-CONSTANTS[gto] =  (1.00000 -  0.700000*CONSTANTS[AF])*CONSTANTS[gto_max];
+CONSTANTS[gNaL] =  CONSTANTS[GNaL_b]*CONSTANTS[AF];
+CONSTANTS[gto] =  (1.00000 -  0.700000*CONSTANTS[AF])*CONSTANTS[Gto_b];
 CONSTANTS[Kmf] =  (2.50000 -  1.25000*CONSTANTS[ISO])*0.000246000;
 CONSTANTS[koCa] =  ((10.0000+ 20.0000*CONSTANTS[AF])+ ( 10.0000*CONSTANTS[ISO])*(1.00000 - CONSTANTS[AF]))*1.00000;
 CONSTANTS[Vjn] =  ( 0.0539000*0.0100000)*CONSTANTS[Vcell];
@@ -549,6 +551,68 @@ CONSTANTS[Q] = (CONSTANTS[T] - 310.000)/10.0000;
 CONSTANTS[Bmax_SLhighsl] =  (CONSTANTS[Vmyo]/CONSTANTS[Vsl])*0.0134000;
 CONSTANTS[Bmax_SLlowsl] =  (CONSTANTS[Vmyo]/CONSTANTS[Vsl])*0.0374000;
 CONSTANTS[Bmax_Csqn] =  (CONSTANTS[Vmyo]/CONSTANTS[Vsr])*0.140000;
+}
+
+void grandi_2011_atrial_with_meta::___applyCVar(const double *cvar) {
+  mpi_printf(0, "Before population:\n");
+  mpi_printf(0, "%s,%s,%s,%s,%s,%s:\n",
+             "GNa","GNaL_b","Gto_b","GKr_b","GKs_b","GK1_b");
+  mpi_printf(0, "%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+             CONSTANTS[GNa],CONSTANTS[GNaL_b],CONSTANTS[Gto_b],CONSTANTS[GKr_b],CONSTANTS[GKs_b],CONSTANTS[GK1_b]);
+
+  CONSTANTS[GNa] *= cvar[0];		// GNa
+  CONSTANTS[GNaL_b] *= cvar[1];		// GNaL
+  CONSTANTS[Gto_b] *= cvar[2];		// Gto
+  CONSTANTS[GKr_b] *= cvar[3];		// GKr
+  CONSTANTS[GKs_b] *= cvar[4];		// GKs
+  CONSTANTS[GK1_b] *= cvar[5];		// GK1
+
+  mpi_printf(0, "After population:\n");
+  mpi_printf(0, "%s,%s,%s,%s,%s,%s:\n",
+             "GNa","GNaL_b","Gto_b","GKr_b","GKs_b","GK1_b");
+  mpi_printf(0, "%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+             CONSTANTS[GNa],CONSTANTS[GNaL_b],CONSTANTS[Gto_b],CONSTANTS[GKr_b],CONSTANTS[GKs_b],CONSTANTS[GK1_b]);
+
+}
+
+
+void grandi_2011_atrial_with_meta::___applyDrugEffect(double conc, const double *hill)
+{
+CONSTANTS[GK1_b] = CONSTANTS[GK1_b] * ((hill[2] > 10E-14 && hill[3] > 10E-14) ? 1./(1.+pow(conc/hill[2],hill[3])) : 1.);
+CONSTANTS[GKs_b] = CONSTANTS[GKs_b] * ((hill[4] > 10E-14 && hill[5] > 10E-14) ? 1./(1.+pow(conc/hill[4],hill[5])) : 1.);
+CONSTANTS[GNa] = CONSTANTS[GNa] * ((hill[6] > 10E-14 && hill[7] > 10E-14) ? 1./(1.+pow(conc/hill[6],hill[7])) : 1.);
+CONSTANTS[GNaL_b] = CONSTANTS[GNaL_b] * ((hill[8] > 10E-14 && hill[9] > 10E-14) ? 1./(1.+pow(conc/hill[8],hill[9])) : 1.);
+CONSTANTS[Gto_b] = CONSTANTS[Gto_b] * ((hill[10] > 10E-14 && hill[11] > 10E-14) ? 1./(1.+pow(conc/hill[10],hill[11])) : 1.);
+CONSTANTS[GKr_b] = CONSTANTS[GKr_b] * ((hill[12] > 10E-14 && hill[13] > 10E-14) ? 1./(1.+pow(conc/hill[12],hill[13])) : 1.);
+}
+
+void grandi_2011_atrial_with_meta::initConsts()
+{
+  ___initConsts();
+}
+
+void grandi_2011_atrial_with_meta::initConsts(double conc, const double *hill)
+{ 
+  ___initConsts();
+  mpi_printf(0,"Concentration: %lf\n", conc);
+  mpi_printf(0, 
+    "+------------+------------+------------+------------+------------+------------+------------+------------+\n"
+    "| Parameter  |    GK1     |    GKs     |    GNa     |    GNaL    |    Gto     |    GKr     |\n"
+    "+------------+------------+------------+------------+------------+------------+------------+------------+\n"
+    "| Control    | %10.6lf | %10.6lf | %10.6lf | %10.6lf | %10.6lf | %10.6lf |\n"
+    "+------------+------------+------------+------------+------------+------------+------------+------------+\n",   CONSTANTS[GK1_b], CONSTANTS[GKs_b], CONSTANTS[GNa], CONSTANTS[GNaL_b], CONSTANTS[Gto_b], CONSTANTS[GKr_b]); 
+  ___applyDrugEffect(conc, hill);
+  mpi_printf(0,
+    "| After-Drug | %10.6lf | %10.6lf | %10.6lf | %10.6lf | %10.6lf | %10.6lf |\n"
+    "+------------+------------+------------+------------+------------+------------+------------+------------+\n",  CONSTANTS[GK1_b], CONSTANTS[GKs_b], CONSTANTS[GNa], CONSTANTS[GNaL_b], CONSTANTS[Gto_b], CONSTANTS[GKr_b]);
+}
+
+void grandi_2011_atrial_with_meta::initConsts( double conc, const double *hill, const double *cvar)
+{
+  initConsts(conc, hill);
+
+  mpi_printf(0,"Implementing Inter-individual Variability\n");
+  ___applyCVar(cvar);
 }
 
 
@@ -706,6 +770,15 @@ ALGEBRAIC[117] = ((ALGEBRAIC[116]+ALGEBRAIC[78])+ALGEBRAIC[90])+ALGEBRAIC[113];
 ALGEBRAIC[118] = ((TIME - CONSTANTS[100]) -  CONSTANTS[101]*floor((TIME - CONSTANTS[100])/CONSTANTS[101])<CONSTANTS[99] ? 1.00000 : 0.00000);
 ALGEBRAIC[119] =  ALGEBRAIC[118]*CONSTANTS[98];
 RATES[20] = - (ALGEBRAIC[117]+ALGEBRAIC[119]);
+ALGEBRAIC[40] = ALGEBRAIC[37]+ALGEBRAIC[39];
+ALGEBRAIC[48] = ALGEBRAIC[44]+ALGEBRAIC[46]; 
+ALGEBRAIC[50] = (ALGEBRAIC[40]+ALGEBRAIC[42])+ALGEBRAIC[48];
+ALGEBRAIC[70] = ALGEBRAIC[64]+ALGEBRAIC[68];
+ALGEBRAIC[79] = ALGEBRAIC[75]+ALGEBRAIC[77];
+ALGEBRAIC[88] = ALGEBRAIC[81]+ALGEBRAIC[86];
+ALGEBRAIC[108] = ALGEBRAIC[103]+ALGEBRAIC[107];
+ALGEBRAIC[110] = ALGEBRAIC[104]+ALGEBRAIC[109];
+ALGEBRAIC[112] = ALGEBRAIC[105]+ALGEBRAIC[111];
 }
 
 void grandi_2011_atrial_with_meta::solveAnalytical(double dt)

@@ -10,8 +10,14 @@ public:
   grandi_2011_atrial_with_meta();
   ~grandi_2011_atrial_with_meta();
   void initConsts ();
+  void initConsts( double conc, const double *hill );
+  void initConsts( double conc, const double *hill, const double *cvar );
   void computeRates( double TIME, double *CONSTANTS, double *RATES, double *STATES, double *ALGEBRAIC );
   void solveAnalytical( double dt );
+private:
+  void ___applyCVar(const double *cvar);
+  void ___applyDrugEffect(double conc, const double *hill);
+  void ___initConsts();
 };
 
 

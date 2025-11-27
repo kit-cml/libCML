@@ -428,7 +428,7 @@ CONSTANTS[JCa_jnsl] =  8.24130542277896849e-13;
 CONSTANTS[F] = 96485.0;
 CONSTANTS[koff_csqn] = 65.0;
 CONSTANTS[kon_csqn] = 100.0;
-CONSTANTS[AF] = 0.0;
+CONSTANTS[AF] = 1.0;
 CONSTANTS[RA] = 0.0;
 CONSTANTS[JNa_jnsl] =  1.83127823220607955e-14;
 CONSTANTS[JNa_slmyo] =  1.63862792221979433e-12;
@@ -515,8 +515,8 @@ STATES[o] =  2.01567245823636694e-06;
 STATES[ryr_r] =  8.00819151705148946e-01;
 CONSTANTS[amp] = -12.5;
 CONSTANTS[duration] = 5.0;
-//CONSTANTS[stim_start] = 50.0;
-CONSTANTS[stim_start] = 10.0;
+CONSTANTS[stim_start] = 50.0;
+//CONSTANTS[stim_start] = 10.0;
 CONSTANTS[BCL] = 1000.0;
 CONSTANTS[koff_tncl] =  (1.00000+ 0.500000*CONSTANTS[ISO])*0.0196000;
 CONSTANTS[Vcell] =  ( ( CONSTANTS[pi]*pow(CONSTANTS[cell_radius], 2.00000))*CONSTANTS[cell_length])*1.00000e-15;
@@ -552,6 +552,7 @@ CONSTANTS[Q] = (CONSTANTS[T] - 310.000)/10.0000;
 CONSTANTS[Bmax_SLhighsl] =  (CONSTANTS[Vmyo]/CONSTANTS[Vsl])*0.0134000;
 CONSTANTS[Bmax_SLlowsl] =  (CONSTANTS[Vmyo]/CONSTANTS[Vsl])*0.0374000;
 CONSTANTS[Bmax_Csqn] =  (CONSTANTS[Vmyo]/CONSTANTS[Vsr])*0.140000;
+CONSTANTS[ICaL_scale] = 1.0;
 }
 
 
@@ -581,6 +582,7 @@ void grandi_2011_atrial_with_meta::___applyCVar(const double *cvar) {
 
 void grandi_2011_atrial_with_meta::___applyDrugEffect(double conc, const double *hill)
 {
+CONSTANTS[ICaL_scale] *= ((hill[0] > cml::math::EPSILON && hill[1] > cml::math::EPSILON) ? 1./(1.+pow(conc/hill[0],hill[1])) : 1.);
 CONSTANTS[gK1] *= ((hill[2] > cml::math::EPSILON && hill[3] > cml::math::EPSILON) ? 1./(1.+pow(conc/hill[2],hill[3])) : 1.);
 CONSTANTS[gKs_jn] *= ((hill[4] > cml::math::EPSILON && hill[5] > cml::math::EPSILON) ? 1./(1.+pow(conc/hill[4],hill[5])) : 1.);
 CONSTANTS[gKs_sl] *= ((hill[4] > cml::math::EPSILON && hill[5] > cml::math::EPSILON ) ? 1./(1.+pow(conc/hill[4],hill[5])) : 1.);
@@ -779,7 +781,7 @@ ALGEBRAIC[119] =  ALGEBRAIC[118]*CONSTANTS[98];
 RATES[20] = - (ALGEBRAIC[117]+ALGEBRAIC[119]);
 ALGEBRAIC[40] = ALGEBRAIC[37]+ALGEBRAIC[39];
 ALGEBRAIC[48] = ALGEBRAIC[44]+ALGEBRAIC[46]; 
-ALGEBRAIC[50] = (ALGEBRAIC[40]+ALGEBRAIC[42])+ALGEBRAIC[48];
+ALGEBRAIC[50] = CONSTANTS[ICaL_scale]*(ALGEBRAIC[40]+ALGEBRAIC[42]+ALGEBRAIC[48]);
 ALGEBRAIC[70] = ALGEBRAIC[64]+ALGEBRAIC[68];
 ALGEBRAIC[79] = ALGEBRAIC[75]+ALGEBRAIC[77];
 ALGEBRAIC[88] = ALGEBRAIC[81]+ALGEBRAIC[86];

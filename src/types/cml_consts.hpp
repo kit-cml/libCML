@@ -22,7 +22,7 @@ namespace cml{
     static const int METER_TO_MICROMETER = 1000000;
     static const int MILLI_TO_NANO = 1000000;
     static const int MICRO_TO_NANO = 1000;
-    static const long BASE_TO_NANO = 1000000000;
+    static const long BASE_TO_MILLI = 1000;
     static const long int DAYS_TO_SECONDS = 86400;
     static const double SECONDS_TO_DAYS = 0.0000115741;
     static const double SECONDS_TO_MINUTES = 0.01666666667;

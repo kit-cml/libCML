@@ -262,6 +262,7 @@ enum E_CONSTANTS_T{
   Bmax_SLhighsl = 133,
   Bmax_SLlowsl = 134,
   Bmax_Csqn = 135,
+  ICaL_scale = 136,
 };
 
 

@@ -24,6 +24,10 @@ enum E_CONSTANTS_T{
   E_Na = 5,
   E_K = 6,
   E_L = 7,
+  stim_start = 8,
+  BCL = 9,
+  duration = 10,
+  amp = 11,
 };
 
 

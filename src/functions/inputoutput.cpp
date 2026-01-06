@@ -1,6 +1,10 @@
 #include "inputoutput.hpp"
 #include "../types/cml_consts.hpp"
 #include "../types/mpi_profile.hpp"
+#include "../types/drug_block_input.hpp"
+#include "../types/cvar_input.hpp"
+#include "../types/individual_drug_input.hpp"
+
 
 #include <cstdarg>
 #include <cstdio>
@@ -115,6 +119,18 @@ int get_data_from_file(const char *file_name, InputType &vec)
   } // end line reading
 
   fclose(fp_drugs);
+  return 0;
+}
+
+
+int combine_cvar_and_drug(const Cvar_Input& cvars, const Drug_Block_Input& drugs, Individual_Drug_Input &vec)
+{
+  for (const Cvar_Row& cvr : cvars) {
+    for (const Drug_Row& drg : drugs) {
+      vec.emplace_back(cvr, drg);  // construct tuple<Drug_Row, Cvar_Row>
+    }
+  }
+
   return 0;
 }
 

@@ -1,7 +1,7 @@
 /*
    There are a total of 82 entries in the algebraic variable array.
    There are a total of 22 entries in each of the rate and state variable arrays.
-   There are a total of 83 entries in the constant variable array.
+   There are a total of 83+2 entries in the constant variable array.
  */
 
 #include "Tong_Choi_Kharche_Holden_Zhang_Taggart_2011.hpp"
@@ -225,7 +225,7 @@
 Tong_Choi_Kharche_Holden_Zhang_Taggart_2011::Tong_Choi_Kharche_Holden_Zhang_Taggart_2011()
 {
 algebraic_size = 82;
-constants_size = 83;
+constants_size = 83+2;
 states_size = 22;
 ALGEBRAIC = new double[algebraic_size];
 CONSTANTS = new double[constants_size];
@@ -244,9 +244,11 @@ delete []STATES;
 void Tong_Choi_Kharche_Holden_Zhang_Taggart_2011::initConsts()
 {
 CONSTANTS[I_hold] = 0;
-CONSTANTS[I_test] = -0.5;
-CONSTANTS[test_start] = 1000;
-CONSTANTS[test_end] = 3000;
+CONSTANTS[amp] = -0.5;
+CONSTANTS[stim_start] = 1000.;
+CONSTANTS[stim_end] = 10000000000000000.;
+CONSTANTS[BCL] = 5000.;
+CONSTANTS[duration] = 2000.;
 STATES[v] = -53.90915441282156;
 STATES[cai] = 0.0001161881607214449;
 CONSTANTS[conversion_Ca_Concentrations] = 1000;
@@ -398,7 +400,8 @@ ALGEBRAIC[K1cl] =  0.000600000*exp( 2.53000*ALGEBRAIC[vFRT]);
 ALGEBRAIC[K2cl] =  0.100000*exp( - 5.00000*ALGEBRAIC[vFRT]);
 ALGEBRAIC[css] = 1.00000/(1.00000+ ALGEBRAIC[K2cl]*(pow(ALGEBRAIC[K1cl]/STATES[cai], 2.00000)+ALGEBRAIC[K1cl]/STATES[cai]+1.00000));
 ALGEBRAIC[ctc] = - 160.000+210.000/(1.00000+exp((STATES[v]+4.56000)/11.6200))+170.000/(1.00000+exp(- (STATES[v]+25.5000)/11.6200));
-ALGEBRAIC[Ist] = (TIME>CONSTANTS[test_start]&&TIME<CONSTANTS[test_end] ? CONSTANTS[I_test] : CONSTANTS[I_hold]);
+//ALGEBRAIC[Ist] = (TIME>CONSTANTS[stim_start]&&TIME<CONSTANTS[stim_end] ? CONSTANTS[I_test] : CONSTANTS[I_hold]);
+ALGEBRAIC[Ist] = (TIME>=CONSTANTS[stim_start]&&TIME<=CONSTANTS[stim_end]&&(TIME - CONSTANTS[stim_start]) -  floor((TIME - CONSTANTS[stim_start])/CONSTANTS[BCL])*CONSTANTS[BCL]<=CONSTANTS[duration] ? CONSTANTS[amp] : CONSTANTS[I_hold]);
 ALGEBRAIC[ina] =  CONSTANTS[gna]*STATES[m]*STATES[m]*STATES[m]*STATES[h]*(STATES[v] - CONSTANTS[ena]);
 ALGEBRAIC[fca] = 1.00000/(1.00000+pow(STATES[cai]/CONSTANTS[kmca], 4.00000));
 ALGEBRAIC[ical] =  CONSTANTS[gcal]*ALGEBRAIC[fca]*STATES[d]*STATES[d]*( 0.800000*STATES[f1]+ 0.200000*STATES[f2])*(STATES[v] - CONSTANTS[ecal]);

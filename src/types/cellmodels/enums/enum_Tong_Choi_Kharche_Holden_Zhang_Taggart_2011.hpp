@@ -89,9 +89,9 @@ enum E_ALGEBRAIC_T{
 
 enum E_CONSTANTS_T{
   I_hold = 0,
-  I_test = 1,
-  test_start = 2,
-  test_end = 3,
+  amp = 1,
+  stim_start = 2,
+  stim_end = 3,
   conversion_Ca_Concentrations = 4,
   conversion_Ca_dependent_Force = 5,
   conversion_I_BKa = 6,
@@ -171,6 +171,8 @@ enum E_CONSTANTS_T{
   xgamma = 80,
   knak = 81,
   nnak = 82,
+  BCL = 83,
+  duration = 84,
 };
 
 

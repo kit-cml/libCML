@@ -4,6 +4,7 @@
 #include "../types/parameter.hpp"
 #include "../types/drug_block_input.hpp"
 #include "../types/cvar_input.hpp"
+#include "../types/individual_drug_input.hpp"
 
 #include <cstdio>
 #include <vector>
@@ -36,6 +37,9 @@ int is_file_existed(const char* pathname);
 // for both IC50-Hill and hERG vectors.
 template <typename RowType, typename InputType>
 int get_data_from_file(const char *filename, InputType &vec);
+
+// combine cvar and drug vector into a vector of tuple.
+int combine_cvar_and_drug(const Cvar_Input& cvars, const Drug_Block_Input& drugs, Individual_Drug_Input &vec);
 
 int check_drug_data_content(const Drug_Block_Input &vec, const Parameter *p_param);
 

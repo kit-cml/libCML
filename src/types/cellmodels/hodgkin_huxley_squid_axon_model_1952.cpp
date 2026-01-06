@@ -1,7 +1,7 @@
 /*
    There are a total of 10 entries in the algebraic variable array.
    There are a total of 4 entries in each of the rate and state variable arrays.
-   There are a total of 8 entries in the constant variable array.
+   There are a total of 8+4 entries in the constant variable array.
  */
 
 #include "hodgkin_huxley_squid_axon_model_1952.hpp"
@@ -42,7 +42,7 @@
 hodgkin_huxley_squid_axon_model_1952::hodgkin_huxley_squid_axon_model_1952()
 {
 algebraic_size = 10;
-constants_size = 8;
+constants_size = 8+4;
 states_size = 4;
 ALGEBRAIC = new double[algebraic_size];
 CONSTANTS = new double[constants_size];
@@ -72,6 +72,10 @@ CONSTANTS[g_L] = 0.3;
 CONSTANTS[E_Na] = CONSTANTS[E_R]+115.000;
 CONSTANTS[E_K] = CONSTANTS[E_R] - 12.0000;
 CONSTANTS[E_L] = CONSTANTS[E_R]+10.6130;
+CONSTANTS[stim_start] = 10.00;
+CONSTANTS[BCL] = 5.0;
+CONSTANTS[duration] = 2.0;
+CONSTANTS[amp] = 20.000;
 }
 
 
@@ -86,7 +90,9 @@ ALGEBRAIC[beta_n] =  0.125000*exp((STATES[V]+75.0000)/80.0000);
 ALGEBRAIC[i_Na] =  CONSTANTS[g_Na]*pow(STATES[m], 3.00000)*STATES[h]*(STATES[V] - CONSTANTS[E_Na]);
 ALGEBRAIC[i_K] =  CONSTANTS[g_K]*pow(STATES[n], 4.00000)*(STATES[V] - CONSTANTS[E_K]);
 ALGEBRAIC[i_L] =  CONSTANTS[g_L]*(STATES[V] - CONSTANTS[E_L]);
-ALGEBRAIC[i_Stim] = (TIME>=10.0000&&TIME<=10.5000 ? 20.0000 : 0.00000);
+//ALGEBRAIC[i_Stim] = (TIME>=10.0000&&TIME<=10.5000 ? 20.0000 : 0.00000);
+ALGEBRAIC[i_Stim] = (TIME>=CONSTANTS[stim_start]&&(TIME - CONSTANTS[stim_start]) -  floor((TIME - CONSTANTS[stim_start])/CONSTANTS[BCL])*CONSTANTS[BCL]<=CONSTANTS[duration] ? CONSTANTS[amp] : 0.000000);
+
 
 RATES[m] =  ALGEBRAIC[alpha_m]*(1.00000 - STATES[m]) -  ALGEBRAIC[beta_m]*STATES[m];
 RATES[h] =  ALGEBRAIC[alpha_h]*(1.00000 - STATES[h]) -  ALGEBRAIC[beta_h]*STATES[h];

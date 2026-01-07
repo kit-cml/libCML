@@ -182,6 +182,10 @@ enum E_CONSTANTS_T{
   V_2 = 102,
   V_SR1 = 103,
   V_SR2 = 104,
+  stim_start = 105,
+  BCL = 106,
+  duration = 107,
+  amp = 108,
 };
 
 

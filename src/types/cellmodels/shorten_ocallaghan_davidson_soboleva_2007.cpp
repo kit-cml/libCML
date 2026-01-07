@@ -1,7 +1,7 @@
 /*
    There are a total of 71 entries in the algebraic variable array.
    There are a total of 56 entries in each of the rate and state variable arrays.
-   There are a total of 105 entries in the constant variable array.
+   There are a total of 105+4 entries in the constant variable array.
  */
 
 #include "shorten_ocallaghan_davidson_soboleva_2007.hpp"
@@ -304,7 +304,7 @@
 shorten_ocallaghan_davidson_soboleva_2007::shorten_ocallaghan_davidson_soboleva_2007()
 {
 algebraic_size = 71;
-constants_size = 105;
+constants_size = 105+4;
 states_size = 56;
 ALGEBRAIC = new double[algebraic_size];
 CONSTANTS = new double[constants_size];
@@ -483,6 +483,10 @@ CONSTANTS[V_1] =  0.0100000*CONSTANTS[V_o];
 CONSTANTS[V_2] =  0.990000*CONSTANTS[V_o];
 CONSTANTS[V_SR1] =  0.0100000*CONSTANTS[V_SR];
 CONSTANTS[V_SR2] =  0.990000*CONSTANTS[V_SR];
+CONSTANTS[stim_start] = 10.;
+CONSTANTS[BCL] = 50.;
+CONSTANTS[duration] = 0.5;
+CONSTANTS[amp] = 150.;
 }
 
 
@@ -534,7 +538,8 @@ ALGEBRAIC[J_Cl] =  STATES[vS]*((ALGEBRAIC[Cl_i] -  ALGEBRAIC[Cl_o]*exp(( CONSTAN
 ALGEBRAIC[a] = 1.00000/(1.00000+exp((STATES[vS] - CONSTANTS[V_a])/CONSTANTS[A_a]));
 ALGEBRAIC[g_Cl] =  CONSTANTS[g_Cl_bar]*pow(ALGEBRAIC[a], 4.00000);
 ALGEBRAIC[I_Cl] =  ALGEBRAIC[g_Cl]*(ALGEBRAIC[J_Cl]/45.0000);
-ALGEBRAIC[I_HH] = (TIME>=0.00000&&TIME<0.500000 ? 150.000 : TIME>=50.0000&&TIME<50.5000 ? 150.000 : TIME>=100.000&&TIME<100.500 ? 150.000 : TIME>=150.000&&TIME<150.500 ? 150.000 : TIME>=200.000&&TIME<200.500 ? 150.000 : TIME>=250.000&&TIME<250.500 ? 150.000 : TIME>=300.000&&TIME<300.500 ? 150.000 : TIME>=350.000&&TIME<350.500 ? 150.000 : TIME>=400.000&&TIME<400.500 ? 150.000 : 0.00000);
+//ALGEBRAIC[I_HH] = (TIME>=0.00000&&TIME<0.500000 ? 150.000 : TIME>=50.0000&&TIME<50.5000 ? 150.000 : TIME>=100.000&&TIME<100.500 ? 150.000 : TIME>=150.000&&TIME<150.500 ? 150.000 : TIME>=200.000&&TIME<200.500 ? 150.000 : TIME>=250.000&&TIME<250.500 ? 150.000 : TIME>=300.000&&TIME<300.500 ? 150.000 : TIME>=350.000&&TIME<350.500 ? 150.000 : TIME>=400.000&&TIME<400.500 ? 150.000 : 0.00000);
+ALGEBRAIC[I_HH] = (TIME>=CONSTANTS[stim_start]&&(TIME - CONSTANTS[stim_start]) -  floor((TIME - CONSTANTS[stim_start])/CONSTANTS[BCL])*CONSTANTS[BCL]<=CONSTANTS[duration] ? CONSTANTS[amp] : 0.000000);
 ALGEBRAIC[I_ionic_s] = ALGEBRAIC[I_Cl]+ALGEBRAIC[I_IR]+ALGEBRAIC[I_DR]+ALGEBRAIC[I_Na]+ALGEBRAIC[I_NaK]+- ALGEBRAIC[I_HH];
 ALGEBRAIC[J_K_t] =  STATES[vT]*((STATES[K_i] -  STATES[K_t]*exp(( -1.00000*CONSTANTS[FF]*STATES[vT])/( CONSTANTS[RR]*CONSTANTS[TT])))/(1.00000 - exp(( -1.00000*CONSTANTS[FF]*STATES[vT])/( CONSTANTS[RR]*CONSTANTS[TT]))));
 ALGEBRAIC[E_K_t] =  (( CONSTANTS[RR]*CONSTANTS[TT])/CONSTANTS[FF])*log(STATES[K_t]/STATES[K_i]);

@@ -43,7 +43,7 @@ void Parameter::init()
   rest_pace_max = 20;
   snprintf(cell_model, sizeof(cell_model), "%s", "CiPAORdv1.0_endo");
   snprintf(solver_type, sizeof(solver_type), "%s", "CVode");
-  snprintf(mutation_type, sizeof(mutation_type), "%s", "CTL");
+  snprintf(mutation_type, sizeof(mutation_type), "%s", "WT");
   snprintf(user_name, sizeof(user_name), "%s", "johndoe");
   snprintf(hill_file, sizeof(hill_file), "%s", "./chantest_hill/bepridil/IC50_samples10.csv");
   snprintf(herg_file, sizeof(herg_file), "%s", "./chantest_herg/bepridil/boot_pars10.csv");

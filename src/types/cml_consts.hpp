@@ -49,6 +49,15 @@ namespace cml{
         {"ToR-ORd-dynCl_endo","Tomek model with dynamic chloride (2020) endocardium"},
         {"ToR-ORd-dynCl_epi","Tomek model with dynamic chloride (2020) epicardium"},
         {"ToR-ORd-dynCl_myo","Tomek model with dynamic chloride (2020) mid-myocardium"},
+        {"ORd-static_Land_endo", "O'Hara-Rudy static (2011) endocardium with Land et al. contraction model"},
+        {"ORd-static_Land_epi", "O'Hara-Rudy static (2011) epicardium with Land et al. contraction model"},
+        {"ORd-static_Land_myo", "O'Hara-Rudy static (2011) mid-myocardium with Land et al. contraction model"},
+        {"CiPAORdv1.0_Land_endo", "O'Hara-Rudy IKr-dynamic (2017) endocardium with Land et al. contraction model"},
+        {"CiPAORdv1.0_Land_epi", "O'Hara-Rudy IKr-dynamic (2017) epicardium with Land et al. contraction model"},
+        {"CiPAORdv1.0_Land_myo", "O'Hara-Rudy IKr-dynamic (2017) mid-myocardium with Land et al. contraction model"},
+        {"ToR-ORd_Land_endo", "Tomek et al. (2019) endocardium with Land et al. contraction model"},
+        {"ToR-ORd_Land_epi", "Tomek et al. (2019) epicardium with Land et al. contraction model"},
+        {"ToR-ORd_Land_myo", "Tomek et al. (2019) mid-myocardium with Land et al. contraction model"},
         {"Grandi","Grandi et al. 2011 Human Atrial Action Potential and Ca2+ Model"}
     };
   }

@@ -2,7 +2,7 @@
 #define TEN_TUSSCHER_MODEL_2006_IK1KO_ENDO_UNITS_HPP
 
 #include "cellmodel.hpp"
-#include "../enums/enum_ten_tusscher_model_2006.hpp"
+#include "enums/enum_ten_tusscher_model_2006.hpp"
 
 class ten_tusscher_model_2006_IK1Ko_endo_units : public Cellmodel
 {

@@ -437,11 +437,18 @@ Ohara_Rudy_2011_R504_beta::Ohara_Rudy_2011_R504_beta()
 	algebraic_size = 198;
 	constants_size = 144;
 	states_size = 41;
+  ALGEBRAIC = new double[algebraic_size];
+  CONSTANTS = new double[constants_size];
+  RATES = new double[states_size];
+  STATES = new double[states_size];
 }
 
 Ohara_Rudy_2011_R504_beta::~Ohara_Rudy_2011_R504_beta()
 {
-
+  delete[] ALGEBRAIC;
+  delete[] CONSTANTS;
+  delete[] RATES;
+  delete[] STATES;
 }
 
 void Ohara_Rudy_2011_R504_beta::___initConsts(double type)

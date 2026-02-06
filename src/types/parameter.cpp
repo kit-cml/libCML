@@ -50,7 +50,7 @@ void Parameter::init()
 // CVAR
   snprintf(cvar_file, sizeof(cvar_file), "%s", "./population/control.csv");
   snprintf(drug_name, sizeof(drug_name), "%s", "bepridil");
-  snprintf(initial_values_zip_file, sizeof(initial_values_zip_file), "bepridil_CiPAORdv1.0_endo_initial_values.zip");
+  snprintf(initial_values_zip_file, sizeof(initial_values_zip_file), "quinidine_CiPAORdv1.0_endo_initial_values.zip");
   snprintf(drug_concentrations, sizeof(drug_concentrations), "%s", "99.0");
 
 #ifdef TISSUE

@@ -46,7 +46,13 @@ int check_drug_data_content(const Drug_Block_Input &vec, const Parameter *p_para
 // parameter assignment
 int assign_params(int *argc, char **argv, Parameter *p_param);
 
-// create concentration directories
-int create_drug_concentrations_directories( std::vector<double> &concs, const Parameter *p_param );
+// write headers for the result files
+void write_csv_header(FILE *fp_result, const char *const headers[], size_t n_headers);
+
+// write the result row more systematically
+// by input the data and its corresponding indices.
+int write_csv_time_series_row(FILE *fp_result,
+                        const double values[],
+                        size_t n_values);
 
 #endif

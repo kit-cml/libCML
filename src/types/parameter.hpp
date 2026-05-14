@@ -47,6 +47,7 @@ struct Parameter
   char drug_concentrations[50];
   char user_name[20];
   char initial_values_zip_file[100];
+  char language_code[3];
   // restitution protocol
   double cl_decrement;
   double cl_end;

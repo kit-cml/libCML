@@ -298,6 +298,9 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "herg_file") == 0){
       strncpy( p_param->herg_file, value, sizeof(p_param->herg_file));
     }
+    else if (strcasecmp(key, "language_code") == 0){
+      strncpy( p_param->language_code, value, sizeof(p_param->language_code));
+    }
     else if (strcasecmp(key, "cvar_file") == 0){
       strncpy( p_param->cvar_file, value, sizeof(p_param->cvar_file));
     }
@@ -369,6 +372,33 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
   return 0;
 }
 
-int create_drug_concentrations_directories( std::vector<double> &drug_concentrations, const Parameter *p_param)
+void write_csv_header(FILE *fp_result, const char *const headers[], size_t n_headers)
 {
+  if (fp_result == NULL || headers == NULL || n_headers == 0) return;
+
+  for (size_t idx = 0; idx < n_headers; idx++) {
+    fprintf(fp_result, "%s", headers[idx]);
+    if (idx < n_headers - 1) fprintf(fp_result, ",");
+  }
+
+  fprintf(fp_result, "\n");
+}
+
+int write_csv_time_series_row(FILE *fp_result,
+                        const double values[],
+                        size_t n_values)
+{
+  if (fp_result == NULL || values == NULL || n_values == 0) {
+    return -1;
+  }
+
+  for (size_t idx = 0; idx < n_values; idx++) {
+    if (fprintf(fp_result, "%.4f%s",
+                values[idx],
+                (idx == n_values - 1) ? "\n" : ",") < 0) {
+      return -1;
+    }
+  }
+
+  return 0;
 }

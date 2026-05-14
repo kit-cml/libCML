@@ -48,8 +48,6 @@ void Cipa_Features::copy(const Cipa_Features &source)
   ca_amp90 = source.ca_amp90;
   time_ca_peak = source.time_ca_peak;
   cad_triangulation = source.cad_triangulation;
-  time_series_data.clear();
-  time_series_data.insert( (source.time_series_data).begin(), (source.time_series_data).end() );
   vm_data.clear();
   vm_data.insert( (source.vm_data).begin(), (source.vm_data).end() );
   cai_data.clear();
@@ -86,7 +84,6 @@ void Cipa_Features::init(const double vm_val, const double ca_val)
   time_cad50_prev = 0.0;
   cad90 = 0.;
   cad50 = 0.;
-  time_series_data.clear();
   vm_data.clear();
   cai_data.clear();
   initial_values.clear();

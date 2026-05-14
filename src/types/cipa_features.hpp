@@ -38,7 +38,6 @@ struct Cipa_Features{
   double cad90;
   double cad50;
   double cad_triangulation;
-  multimap<double, string> time_series_data;
   multimap<double, double> vm_data;
   multimap<double, double> cai_data;
   vector<double> initial_values;

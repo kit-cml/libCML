@@ -6,6 +6,14 @@ struct Parameter
   double cycle_length; // period for one cycle
   short number_pacing; // pace number of the simulation
   short number_pacing_write; // pace number for writing result
+  // How long a single-cell run lasts, in ms. Zero means "not asked for", and
+  // the benches fall back to number_pacing * cycle_length as they always did.
+  //
+  // Deliberately not the TISSUE `tmax` below: that one exists only under
+  // -DTISSUE and defaults to 2000, so a single-cell build has no such field and
+  // reusing the name would silently give every unset run 2000 ms instead of its
+  // pacing-derived length.
+  double ep_tmax;
   char solver_type[50]; // for now, only Euler or CVode are available
   char cell_model[50]; // cell model type and the type of the cell (if exist)
   short prior_risk; // 0: low, 1: intermediate, 2: high

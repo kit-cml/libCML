@@ -9,6 +9,9 @@ void Parameter::init()
   cycle_length = 2000.;
   number_pacing = 1000;
   number_pacing_write = 0;
+  // Zero is the sentinel for "the deck did not ask": the benches then derive
+  // the run length from the pacing, exactly as before this field existed.
+  ep_tmax = 0.0;
   time_step_min = 0.005;
   time_step_max = 1.;
   writing_step = 2.0;
@@ -103,6 +106,7 @@ void Parameter::show_val()
   mpi_printf( 0, "%s -- %lf\n", "cycle_length", cycle_length);
   mpi_printf( 0, "%s -- %hd\n", "number_pacing", number_pacing);
   mpi_printf( 0, "%s -- %hd\n", "number_pacing_write", number_pacing_write);
+  mpi_printf( 0, "%s -- %lf\n", "ep_tmax", ep_tmax);
   mpi_printf( 0, "-------- Restitution Protocol (if applied) -------------\n");
   mpi_printf( 0, "%s -- %hd\n", "cl_decrement", cl_decrement);
   mpi_printf( 0, "%s -- %hd\n", "cl_end", cl_end);

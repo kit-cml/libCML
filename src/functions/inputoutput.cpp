@@ -319,6 +319,9 @@ int assign_params(int *argc, char *argv[], Parameter *p_param)
     else if (strcasecmp(key, "stimulus_duration") == 0) {
       p_param->stimulus_duration = strtod( value, NULL);
     }
+    else if (strcasecmp(key, "ep_tmax") == 0) {
+      p_param->ep_tmax = strtod( value, NULL);
+    }
     else if (strcasecmp(key, "stimulus_amplitude_scale") == 0) {
       p_param->stimulus_amplitude_scale = strtod( value, NULL);
     }

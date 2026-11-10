@@ -4,7 +4,7 @@
    There are a total of 46 entries in the constant variable array.
  */
 
-#include "tentusscher_noble_noble_panfilov_2004_c.hpp"
+#include "tentusscher_noble_noble_panfilov_2004_M.hpp"
 #include <cmath>
 #include <cstdlib>
 
@@ -160,7 +160,7 @@
  */
 
 
-tentusscher_noble_noble_panfilov_2004_c::tentusscher_noble_noble_panfilov_2004_c()
+tentusscher_noble_noble_panfilov_2004_M::tentusscher_noble_noble_panfilov_2004_M()
 {
 algebraic_size = 67;
 constants_size = 46;
@@ -171,7 +171,7 @@ RATES = new double[states_size];
 STATES = new double[states_size];
 }
 
-tentusscher_noble_noble_panfilov_2004_c::~tentusscher_noble_noble_panfilov_2004_c()
+tentusscher_noble_noble_panfilov_2004_M::~tentusscher_noble_noble_panfilov_2004_M()
 {
 delete []ALGEBRAIC;
 delete []CONSTANTS;
@@ -179,7 +179,7 @@ delete []RATES;
 delete []STATES;
 }
 
-void tentusscher_noble_noble_panfilov_2004_c::initConsts()
+void tentusscher_noble_noble_panfilov_2004_M::initConsts()
 {
 STATES[V] = -86.2;
 CONSTANTS[R] = 8314.472;
@@ -202,7 +202,7 @@ CONSTANTS[g_K1] = 5.405;
 CONSTANTS[g_Kr] = 0.096;
 STATES[Xr1] = 0;
 STATES[Xr2] = 1;
-CONSTANTS[g_Ks] = 0.245;
+CONSTANTS[g_Ks] = 0.062;
 STATES[Xs] = 0;
 CONSTANTS[g_Na] = 14.838;
 STATES[m] = 0;
@@ -214,7 +214,7 @@ STATES[d] = 0;
 STATES[f] = 1;
 STATES[fCa] = 1;
 CONSTANTS[g_bca] = 0.000592;
-CONSTANTS[g_to] = 0.073;
+CONSTANTS[g_to] = 0.294;
 STATES[s] = 1;
 STATES[r] = 0;
 CONSTANTS[P_NaK] = 1.362;
@@ -247,12 +247,12 @@ CONSTANTS[tau_fCa] = 2.00000;
 }
 
 
-void tentusscher_noble_noble_panfilov_2004_c::computeRates( double TIME, double *CONSTANTS, double *RATES, double *STATES, double *ALGEBRAIC )
+void tentusscher_noble_noble_panfilov_2004_M::computeRates( double TIME, double *CONSTANTS, double *RATES, double *STATES, double *ALGEBRAIC )
 {
 ALGEBRAIC[f_inf] = 1.00000/(1.00000+exp((STATES[V]+20.0000)/7.00000));
 ALGEBRAIC[tau_f] =  1125.00*exp(- pow(STATES[V]+27.0000, 2.00000)/240.000)+80.0000+165.000/(1.00000+exp((25.0000 - STATES[V])/10.0000));
-ALGEBRAIC[s_inf] = 1.00000/(1.00000+exp((STATES[V]+28.0000)/5.00000));
-ALGEBRAIC[tau_s] =  1000.00*exp(- pow(STATES[V]+67.0000, 2.00000)/1000.00)+8.00000;
+ALGEBRAIC[s_inf] = 1.00000/(1.00000+exp((STATES[V]+20.0000)/5.00000));
+ALGEBRAIC[tau_s] =  85.0000*exp(- pow(STATES[V]+45.0000, 2.00000)/320.000)+5.00000/(1.00000+exp((STATES[V] - 20.0000)/5.00000))+3.00000;
 ALGEBRAIC[r_inf] = 1.00000/(1.00000+exp((20.0000 - STATES[V])/6.00000));
 ALGEBRAIC[tau_r] =  9.50000*exp(- pow(STATES[V]+40.0000, 2.00000)/1800.00)+0.800000;
 ALGEBRAIC[g_inf] = (STATES[Ca_i]<0.000350000 ? 1.00000/(1.00000+pow(STATES[Ca_i]/0.000350000, 6.00000)) : 1.00000/(1.00000+pow(STATES[Ca_i]/0.000350000, 16.0000)));
@@ -329,13 +329,13 @@ RATES[h] = (ALGEBRAIC[h_inf] - STATES[h])/ALGEBRAIC[tau_h];
 RATES[j] = (ALGEBRAIC[j_inf] - STATES[j])/ALGEBRAIC[tau_j];
 RATES[d] = (ALGEBRAIC[d_inf] - STATES[d])/ALGEBRAIC[tau_d];
 RATES[fCa] = (ALGEBRAIC[fCa_inf]>STATES[fCa]&&STATES[V]>- 60.0000 ? 0.000000 : ALGEBRAIC[d_fCa]);
-RATES[Na_i] =  (( - 1.00000*(ALGEBRAIC[i_Na]+ALGEBRAIC[i_b_Na]+ 3.00000*ALGEBRAIC[i_NaK]+ 3.00000*ALGEBRAIC[i_NaCa]))/( 1.00000*CONSTANTS[V_c]*CONSTANTS[F]))*CONSTANTS[Cm];
+RATES[Na_i] = ( - 1.00000*(ALGEBRAIC[i_Na]+ALGEBRAIC[i_b_Na]+ 3.00000*ALGEBRAIC[i_NaK]+ 3.00000*ALGEBRAIC[i_NaCa])*CONSTANTS[Cm])/( 1.00000*CONSTANTS[V_c]*CONSTANTS[F]);
 RATES[V] =  (- 1.00000/1.00000)*(ALGEBRAIC[i_K1]+ALGEBRAIC[i_to]+ALGEBRAIC[i_Kr]+ALGEBRAIC[i_Ks]+ALGEBRAIC[i_CaL]+ALGEBRAIC[i_NaK]+ALGEBRAIC[i_Na]+ALGEBRAIC[i_b_Na]+ALGEBRAIC[i_NaCa]+ALGEBRAIC[i_b_Ca]+ALGEBRAIC[i_p_K]+ALGEBRAIC[i_p_Ca]+ALGEBRAIC[i_Stim]);
-RATES[K_i] =  (( - 1.00000*((ALGEBRAIC[i_K1]+ALGEBRAIC[i_to]+ALGEBRAIC[i_Kr]+ALGEBRAIC[i_Ks]+ALGEBRAIC[i_p_K]+ALGEBRAIC[i_Stim]) -  2.00000*ALGEBRAIC[i_NaK]))/( 1.00000*CONSTANTS[V_c]*CONSTANTS[F]))*CONSTANTS[Cm];
+RATES[K_i] = ( - 1.00000*((ALGEBRAIC[i_K1]+ALGEBRAIC[i_to]+ALGEBRAIC[i_Kr]+ALGEBRAIC[i_Ks]+ALGEBRAIC[i_p_K]+ALGEBRAIC[i_Stim]) -  2.00000*ALGEBRAIC[i_NaK])*CONSTANTS[Cm])/( 1.00000*CONSTANTS[V_c]*CONSTANTS[F]);
 RATES[Ca_i] =  ALGEBRAIC[Ca_i_bufc]*(((ALGEBRAIC[i_leak] - ALGEBRAIC[i_up])+ALGEBRAIC[i_rel]) -  (( 1.00000*((ALGEBRAIC[i_CaL]+ALGEBRAIC[i_b_Ca]+ALGEBRAIC[i_p_Ca]) -  2.00000*ALGEBRAIC[i_NaCa]))/( 2.00000*1.00000*CONSTANTS[V_c]*CONSTANTS[F]))*CONSTANTS[Cm]);
 RATES[Ca_SR] =  (( ALGEBRAIC[Ca_sr_bufsr]*CONSTANTS[V_c])/CONSTANTS[V_sr])*(ALGEBRAIC[i_up] - (ALGEBRAIC[i_rel]+ALGEBRAIC[i_leak]));
 }
 
-void tentusscher_noble_noble_panfilov_2004_c::solveAnalytical(double dt)
+void tentusscher_noble_noble_panfilov_2004_M::solveAnalytical(double dt)
 {
 }

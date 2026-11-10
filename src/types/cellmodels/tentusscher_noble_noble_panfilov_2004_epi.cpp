@@ -4,7 +4,7 @@
    There are a total of 46 entries in the constant variable array.
  */
 
-#include "tentusscher_noble_noble_panfilov_2004_b.hpp"
+#include "tentusscher_noble_noble_panfilov_2004_epi.hpp"
 #include <cmath>
 #include <cstdlib>
 
@@ -160,7 +160,7 @@
  */
 
 
-tentusscher_noble_noble_panfilov_2004_b::tentusscher_noble_noble_panfilov_2004_b()
+tentusscher_noble_noble_panfilov_2004_epi::tentusscher_noble_noble_panfilov_2004_epi()
 {
 algebraic_size = 67;
 constants_size = 46;
@@ -171,7 +171,7 @@ RATES = new double[states_size];
 STATES = new double[states_size];
 }
 
-tentusscher_noble_noble_panfilov_2004_b::~tentusscher_noble_noble_panfilov_2004_b()
+tentusscher_noble_noble_panfilov_2004_epi::~tentusscher_noble_noble_panfilov_2004_epi()
 {
 delete []ALGEBRAIC;
 delete []CONSTANTS;
@@ -179,7 +179,7 @@ delete []RATES;
 delete []STATES;
 }
 
-void tentusscher_noble_noble_panfilov_2004_b::initConsts()
+void tentusscher_noble_noble_panfilov_2004_epi::initConsts()
 {
 STATES[V] = -86.2;
 CONSTANTS[R] = 8314.472;
@@ -247,7 +247,7 @@ CONSTANTS[tau_fCa] = 2.00000;
 }
 
 
-void tentusscher_noble_noble_panfilov_2004_b::computeRates( double TIME, double *CONSTANTS, double *RATES, double *STATES, double *ALGEBRAIC )
+void tentusscher_noble_noble_panfilov_2004_epi::computeRates( double TIME, double *CONSTANTS, double *RATES, double *STATES, double *ALGEBRAIC )
 {
 ALGEBRAIC[f_inf] = 1.00000/(1.00000+exp((STATES[V]+20.0000)/7.00000));
 ALGEBRAIC[tau_f] =  1125.00*exp(- pow(STATES[V]+27.0000, 2.00000)/240.000)+80.0000+165.000/(1.00000+exp((25.0000 - STATES[V])/10.0000));
@@ -336,6 +336,6 @@ RATES[Ca_i] =  ALGEBRAIC[Ca_i_bufc]*(((ALGEBRAIC[i_leak] - ALGEBRAIC[i_up])+ALGE
 RATES[Ca_SR] =  (( ALGEBRAIC[Ca_sr_bufsr]*CONSTANTS[V_c])/CONSTANTS[V_sr])*(ALGEBRAIC[i_up] - (ALGEBRAIC[i_rel]+ALGEBRAIC[i_leak]));
 }
 
-void tentusscher_noble_noble_panfilov_2004_b::solveAnalytical(double dt)
+void tentusscher_noble_noble_panfilov_2004_epi::solveAnalytical(double dt)
 {
 }

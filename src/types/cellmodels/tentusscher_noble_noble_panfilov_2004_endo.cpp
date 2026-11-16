@@ -247,6 +247,7 @@ CONSTANTS[tau_fCa] = 2.00000;
 }
 
 
+
 void tentusscher_noble_noble_panfilov_2004_endo::computeRates( double TIME, double *CONSTANTS, double *RATES, double *STATES, double *ALGEBRAIC )
 {
 ALGEBRAIC[f_inf] = 1.00000/(1.00000+exp((STATES[V]+20.0000)/7.00000));
@@ -338,4 +339,22 @@ RATES[Ca_SR] =  (( ALGEBRAIC[Ca_sr_bufsr]*CONSTANTS[V_c])/CONSTANTS[V_sr])*(ALGE
 
 void tentusscher_noble_noble_panfilov_2004_endo::solveAnalytical(double dt)
 {
+STATES[m]   = ALGEBRAIC[m_inf]   - (ALGEBRAIC[m_inf]   - STATES[m])  *exp(-dt/ALGEBRAIC[tau_m]);
+STATES[h]   = ALGEBRAIC[h_inf]   - (ALGEBRAIC[h_inf]   - STATES[h])  *exp(-dt/ALGEBRAIC[tau_h]);
+STATES[j]   = ALGEBRAIC[j_inf]   - (ALGEBRAIC[j_inf]   - STATES[j])  *exp(-dt/ALGEBRAIC[tau_j]);
+STATES[Xr1] = ALGEBRAIC[xr1_inf] - (ALGEBRAIC[xr1_inf] - STATES[Xr1])*exp(-dt/ALGEBRAIC[tau_xr1]);
+STATES[Xr2] = ALGEBRAIC[xr2_inf] - (ALGEBRAIC[xr2_inf] - STATES[Xr2])*exp(-dt/ALGEBRAIC[tau_xr2]);
+STATES[Xs]  = ALGEBRAIC[xs_inf]  - (ALGEBRAIC[xs_inf]  - STATES[Xs]) *exp(-dt/ALGEBRAIC[tau_xs]);
+STATES[d]   = ALGEBRAIC[d_inf]   - (ALGEBRAIC[d_inf]   - STATES[d])  *exp(-dt/ALGEBRAIC[tau_d]);
+STATES[f]   = ALGEBRAIC[f_inf]   - (ALGEBRAIC[f_inf]   - STATES[f])  *exp(-dt/ALGEBRAIC[tau_f]);
+STATES[s]   = ALGEBRAIC[s_inf]   - (ALGEBRAIC[s_inf]   - STATES[s])  *exp(-dt/ALGEBRAIC[tau_s]);
+STATES[r]   = ALGEBRAIC[r_inf]   - (ALGEBRAIC[r_inf]   - STATES[r])  *exp(-dt/ALGEBRAIC[tau_r]);
+
+STATES[fCa]   += RATES[fCa]   * dt;
+STATES[g]     += RATES[g]     * dt;
+STATES[V]     += RATES[V]     * dt;
+STATES[Na_i]  += RATES[Na_i]  * dt;
+STATES[K_i]   += RATES[K_i]   * dt;
+STATES[Ca_i]  += RATES[Ca_i]  * dt;
+STATES[Ca_SR] += RATES[Ca_SR] * dt;
 }

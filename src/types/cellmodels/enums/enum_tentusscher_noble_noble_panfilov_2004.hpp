@@ -118,7 +118,6 @@ enum E_CONSTANTS_T{
   K_buf_sr = 43,
   V_sr = 44,
   tau_fCa = 45,
-  cumm_BCL = 46,
 };
 
 enum E_STATES_T{
